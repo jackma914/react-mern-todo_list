@@ -12,7 +12,13 @@ function Home() {
           className="home__image"
         />
         <div className="home__row">
-          <Product />
+          <Product
+            id="2323"
+            title="제품1입니다"
+            price={3000}
+            image="https://en.pimg.jp/024/292/158/1/24292158.jpg"
+            rating={2}
+          />
         </div>
         <div className="home__row">
           <Product />

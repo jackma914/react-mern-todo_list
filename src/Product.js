@@ -5,21 +5,22 @@ function Product({ id, image, title, price, rating }) {
   return (
     <div className="product">
       <div className="product__info">
-        <p>제품1</p>
+        <p>{title}</p>
         <p className="product__price">
           <small>가격</small>
-          <strong>10,000</strong>
+          <strong>{price}</strong>
           <small>원</small>
         </p>
 
         <div className="product__rating">
-          <p>★</p>
-          <p>★</p>
-          <p>★</p>
-          <p>★</p>
+          {Array(rating)
+            .fill()
+            .map(() => (
+              <p>★</p>
+            ))}
         </div>
       </div>
-      <img src="https://en.pimg.jp/024/292/158/1/24292158.jpg" alt="" />
+      <img src={image} alt="" />
       <button>장바구니에 담기</button>
     </div>
   );
