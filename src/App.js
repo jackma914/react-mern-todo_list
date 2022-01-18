@@ -8,19 +8,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {/* <Routes>
-          <Route path="/" element={<Header />} />
-        </Routes>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-        <Routes>
-          <Route path="/checkout" element={<Header />} />
-        </Routes>
-        <Routes>
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes> */}
-
         <Routes>
           <Route
             exact
