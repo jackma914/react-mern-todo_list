@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "./store/users";
 import "./Home.css";
 import Product from "./Product.js";
 
