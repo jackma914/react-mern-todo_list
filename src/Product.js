@@ -1,23 +1,21 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useReducer } from "react";
 import "./Product.css";
-// import { useStateValue } from "./StateProvider";
-import { UserContext } from "./store/users";
+import reducer, { initialState } from "./store/Recuder";
 
 function Product({ id, image, title, price, rating }) {
-  // const [{ basket }, dispatch] = UserContext();
+  const [{ basket }, dispatch] = useReducer(reducer, []);
+  // console.log(state);
+  console.log(basket);
 
-  // const addToBasket = () => {
-  //   dispatch({
-  //     type: "ADD_TO_BASKET",
-  //     item: {
-  //       id: id,
-  //       title: title,
-  //       image: image,
-  //       price: price,
-  //       rating: rating,
-  //     },
-  //   });
-  // };
+  const addToBasket = () => {
+    dispatch({
+      type: "ADD_TO_BASKET",
+      payload: {
+        item: { title: title, image: image },
+      },
+    });
+  };
+
   return (
     <div className="product">
       <div className="product__info">
@@ -37,7 +35,7 @@ function Product({ id, image, title, price, rating }) {
         </div>
       </div>
       <img src={image} alt="" />
-      <button onClick={() => {}}>장바구니에 담기</button>
+      <button onClick={addToBasket}>장바구니에 담기</button>
     </div>
   );
 }
