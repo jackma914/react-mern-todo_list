@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { UserContext } from "./store/users";
 import "./Home.css";
 import Product from "./Product.js";
+import { ProfileDispatch } from "./store/Reducer";
 
 function Home() {
+  const context = useContext(ProfileDispatch);
+  console.log(context);
   return (
     <div className="home">
       <div className="home__container">

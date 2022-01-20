@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, useContext } from "react";
 import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket";
@@ -18,12 +18,12 @@ function Header() {
 
       <div className="header__nav">
         <div className="header__option">
-          <span className="header__optionLineOne">안녕</span>
+          <span className="header__optionLineOne"></span>
           <span className="header__optionLineTwo">로그인</span>
         </div>
         <div className="header__option">
           {" "}
-          <span className="header__optionLineOne">돌아가기</span>
+          <span className="header__optionLineOne"></span>
           <span className="header__optionLineTwo">주문내역</span>
         </div>
         <div className="header__option">
