@@ -3,12 +3,13 @@ import Header from "./Header";
 import Home from "./Home";
 import Checkout from "./Checkout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import StateBasket from "./store/Reducer";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 function App() {
   return (
     <div className="App">
-      <StateBasket>
+      <Provider store={store}>
         <BrowserRouter>
           <Routes>
             <Route
@@ -33,7 +34,7 @@ function App() {
             />
           </Routes>
         </BrowserRouter>
-      </StateBasket>
+      </Provider>
     </div>
   );
 }

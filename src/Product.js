@@ -1,13 +1,12 @@
 import React, { useState, useContext, useReducer } from "react";
 
-import { initialState, indexReducer } from "./store/Reducer";
 import "./Product.css";
+import { connect } from "react-redux";
+import { addBasket } from "./store/action";
 
 function Product({ id, image, title, price, rating }) {
-  const [state, dispatch] = useReducer(indexReducer, initialState);
-
   return (
-    <div className="product">
+    <div key={id} className="product">
       <div className="product__info">
         <p>{title}</p>
         <p className="product__price">
@@ -27,10 +26,7 @@ function Product({ id, image, title, price, rating }) {
       <img src={image} alt="" />
       <button
         onClick={() => {
-          dispatch({
-            type: "ADD_BASKET",
-            item: { title: title, image: image },
-          });
+          // addBasket();
         }}
       >
         장바구니에 담기
