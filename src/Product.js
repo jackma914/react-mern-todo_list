@@ -2,37 +2,54 @@ import React, { useState, useContext, useReducer } from "react";
 
 import "./Product.css";
 import { connect } from "react-redux";
-import { addBasket } from "./store/action";
+import { addProduct } from "./redux/addProduct/actions";
 
-function Product({ id, image, title, price, rating }) {
+function Product(props) {
+  console.log(props.basket);
+
+  const item = {
+    id: props.id,
+    title: props.title,
+    price: props.price,
+  };
+
   return (
-    <div key={id} className="product">
+    <div className="product" key={props.id}>
       <div className="product__info">
-        <p>{title}</p>
+        <p>{props.title}</p>
         <p className="product__price">
           <small>가격</small>
-          <strong>{price}</strong>
+          <strong>{props.price}</strong>
           <small>원</small>
         </p>
 
         <div className="product__rating">
-          {Array(rating)
+          {Array(props.rating)
             .fill()
             .map(() => {
               return <p>★</p>;
             })}
         </div>
       </div>
-      <img src={image} alt="" />
+      <img src={props.image} alt="" />
       <button
         onClick={() => {
-          // addBasket();
+          props.addProduct(item);
         }}
       >
-        장바구니에 담기
+        버튼
       </button>
+      {/* {props.basket} */}
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    basket: state.basket,
+  };
+};
 
-export default Product;
+const mapDispatchToProps = {
+  addProduct: (number) => addProduct(number),
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

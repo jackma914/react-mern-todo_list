@@ -1,13 +1,19 @@
 import React from "react";
 import "./Checkout.css";
+import { connect } from "react-redux";
 
-function Checkout() {
+function Checkout({ basket }) {
+  console.log(basket.price);
   return (
     <div>
-      {" "}
-      <h1>장바구니입니다</h1>
+      <h1>장바구니 : {basket.price}</h1>
     </div>
   );
 }
 
-export default Checkout;
+const mapStateToProps = (addProduct) => {
+  return {
+    basket: addProduct.basket,
+  };
+};
+export default connect(mapStateToProps)(Checkout);

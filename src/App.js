@@ -4,7 +4,7 @@ import Home from "./Home";
 import Checkout from "./Checkout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./store/store";
+import store from "./redux/store";
 
 function App() {
   return (
@@ -19,10 +19,11 @@ function App() {
                 <>
                   <Header />
                   <Home />
+                  <Checkout />
                 </>
               }
             />
-
+            {/* 
             <Route
               path="/checkout"
               element={
@@ -31,7 +32,7 @@ function App() {
                   <Checkout />
                 </>
               }
-            />
+            /> */}
           </Routes>
         </BrowserRouter>
       </Provider>
