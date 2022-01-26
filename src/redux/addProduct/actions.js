@@ -1,8 +1,8 @@
 import { ADD_PRODUCT } from "./types";
 
-export const addProduct = (basket) => {
+export const addProduct = (itemID) => {
   return {
     type: ADD_PRODUCT,
-    payload: basket,
+    payload: { id: itemID },
   };
 };

@@ -1,41 +1,36 @@
 import "./App.css";
-import Header from "./Header";
-import Home from "./Home";
-import Checkout from "./Checkout";
+import Header from "./components/Navbar/Header";
+import Home from "./components/Product/Home";
+// import Checkout from "./Checkout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./redux/store";
 
 function App() {
   return (
     <div className="App">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <>
-                  <Header />
-                  <Home />
-                  <Checkout />
-                </>
-              }
-            />
-            {/* 
-            <Route
-              path="/checkout"
-              element={
-                <>
-                  <Header />
-                  <Checkout />
-                </>
-              }
-            /> */}
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <>
+                <Header />
+                <Home />
+              </>
+            }
+          />
+          {/* 
+          <Route
+            path="/checkout"
+            element={
+              <>
+                <Header />
+                <Checkout />
+              </>
+            }
+          /> */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
