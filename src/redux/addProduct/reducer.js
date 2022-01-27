@@ -1,4 +1,4 @@
-import { ADD_PRODUCT } from "./types";
+import { ADD_PRODUCT, ADJUST_ITEM_QTY } from "./types";
 
 const initialState = {
   products: [
@@ -39,7 +39,25 @@ const addProductReducer = (state = initialState, action) => {
       const inCart = state.cart.find((item) =>
         item.id === action.payload.id ? true : false
       );
-      return {};
+      return {
+        ...state,
+        cart: inCart
+          ? state.cart.map((item) =>
+              item.id === action.payload.id
+                ? { ...item, qty: item.qty + 1 }
+                : item
+            )
+          : [...state.cart, { ...item, qty: 1 }],
+      };
+    case ADJUST_ITEM_QTY:
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, qty: action.payload.qty }
+            : item
+        ),
+      };
 
     //default는 앞에 정의한 case 이외의 경우일 기본값으로 사용하기 위해 state를 리턴해줍니다.
     default:

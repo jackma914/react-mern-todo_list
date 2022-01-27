@@ -1,7 +1,9 @@
 import React from "react";
 import "./Product.css";
+import { addProduct } from "../../redux/addProduct/actions";
+import { connect } from "react-redux";
 
-function Product({ productData }) {
+function Product({ productData, addProduct }) {
   return (
     <div className="product">
       <div className="product__info">
@@ -22,9 +24,16 @@ function Product({ productData }) {
       </div>
       <img src={productData.image} alt="" />
       <button onClick={() => {}}>View Item</button>
-      <button onClick={() => {}}>Add To Cart</button>
+      <button onClick={() => addProduct(productData.id)}>Add To Cart</button>
     </div>
   );
 }
 
-export default Product;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (id) => dispatch(addProduct(id)),
+    // loadCurrentItem: (item) => dispatch(loadCurrentItem(item)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Product);
