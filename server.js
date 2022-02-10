@@ -1,6 +1,9 @@
 //보안이 담긴 값들을 담은 .env파일을 프로젝트 상단에 아래 코드를 적어 환경 변수를 불러옵니다.
 require("dotenv").config();
 
+//import routes
+const authRoute = require("./routes/auth");
+
 //mongoose
 const mongoose = require("mongoose");
 
@@ -16,18 +19,11 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 //본문
-
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("fullstack react course express server");
 });
 
-app.post("/name", (req, res) => {
-  if (req.body.name) {
-    return res.json({ name: req.body.name });
-  } else {
-    return res.status(400).json({ error: "No name provided" });
-  }
-});
+app.use("/api/auth", authRoute);
 
 //mongoose와 연결한뒤에 서버를 시작합니다.
 mongoose
