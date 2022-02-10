@@ -1,0 +1,31 @@
+//보안이 담긴 값들을 담은 .env파일을 프로젝트 상단에 아래 코드를 적어 환경 변수를 불러옵니다.
+require("dotenv").config();
+
+//express
+const express = require("express");
+const app = express();
+
+//요청의 본문을 해석해주는 미들웨어이다
+//body-parser의 일부 기능이 익스프레스에 내장되었기 때문이다.
+app.use(express.json());
+
+//bodyParser 미들웨어의 여러 옵션 중에 하나로 false 값일 시 node.js에 기본으로 내장된 queryString, true 값일 시 따로 설치가 필요한 npm qs 라이브러리를 사용합니다.
+app.use(express.urlencoded());
+
+//본문
+
+app.get("/", (req, res) => {
+  res.send("fullstack react course express server");
+});
+
+app.post("/name", (req, res) => {
+  if (req.body.name) {
+    return res.json({ name: req.body.name });
+  } else {
+    return res.status(400).json({ error: "No name provided" });
+  }
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
+});
