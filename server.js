@@ -1,6 +1,9 @@
 //보안이 담긴 값들을 담은 .env파일을 프로젝트 상단에 아래 코드를 적어 환경 변수를 불러옵니다.
 require("dotenv").config();
 
+//mongoose
+const mongoose = require("mongoose");
+
 //express
 const express = require("express");
 const app = express();
@@ -26,6 +29,16 @@ app.post("/name", (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
-});
+//mongoose와 연결한뒤에 서버를 시작합니다.
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("Connected to datebase");
+
+    app.listen(process.env.PORT, () => {
+      console.log(`Server running on port ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
