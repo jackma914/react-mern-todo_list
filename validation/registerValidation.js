@@ -9,6 +9,8 @@ const validateRegisterInput = (data) => {
   //데이터가 빈 데이터인지를 먼저 봅니다.
   if (isEmpty(data.email)) {
     errors.email = "Email field can not be empty";
+
+    // isEmail은 이메일 형식을 검사합니다.
   } else if (!Validator.isEmail(data.email)) {
     errors.email = "Email is invalid, please provide a valid email";
   }
@@ -30,6 +32,8 @@ const validateRegisterInput = (data) => {
   // check confirm password field
   if (isEmpty(data.confirmPassword)) {
     errors.confirmPassword = "Confirm Password field can not be empty";
+
+    //password와 confirmPassword가 같은지를 비교하는 equals 메서드입니다.
   } else if (!Validator.equals(data.password, data.confirmPassword)) {
     errors.confirmPassword = "Password and Confirm Password field must match";
   }

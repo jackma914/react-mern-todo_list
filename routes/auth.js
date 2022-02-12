@@ -47,8 +47,14 @@ router.post("/register", async (req, res) => {
     //save the user to the database
     const savedUser = await newUser.save();
 
+    //_doc속성은 각 문서 객체의 정보를 담고 있다.
+
+    const userToReturn = { ...savedUser._doc };
+
+    //Http Method메소드에는 get,post,put,delete가 있습니다. delete는 서버의 데이터를 삭제합니다.
+    delete userToReturn.password;
     //return the new user
-    return res.json(savedUser);
+    return res.json(userToReturn);
   } catch (err) {
     //error here
     console.log(err);
