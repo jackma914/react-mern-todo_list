@@ -11,6 +11,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
+//cookie
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 //요청의 본문을 해석해주는 미들웨어이다
 //body-parser의 일부 기능이 익스프레스에 내장되었기 때문이다.
 app.use(express.json());
@@ -38,5 +42,3 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-
-
