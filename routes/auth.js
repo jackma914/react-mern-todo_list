@@ -49,19 +49,6 @@ router.post("/register", async (req, res) => {
     //save the user to the database
     const savedUser = await newUser.save();
 
-    const payload = { userId: savedUser._id };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    //HttpOnly 쿠키 속성은 자바스크립트를 통해 쿠키 값에 접근하는 것을 막습니다.
-    //Secure 쿠키는 HTTPS 프로토콜 상에서 암호화된(encrypted ) 요청일 경우에만 전송됩니다.
-    res.cookie("access-token", token, {
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
-
     //---------------------------------------------------------------------------------------------------------
 
     //_doc속성은 각 문서 객체의 정보를 담고 있습니다.
@@ -143,21 +130,6 @@ router.get("/current", requiresAuth, (req, res) => {
     return res.status(401).send("Unauthorized");
   }
   return res.json(req.user);
-});
-
-// @route    PUT  /api/auth/logout
-// @desc     logout user a clear the cookie
-// @access   Public
-
-router.put("/logout", requiresAuth, async (req, res) => {
-  try {
-    res.clearCookie("access-token");
-
-    return res.json({ success: true });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send(err.message);
-  }
 });
 
 module.exports = router;
