@@ -8,7 +8,7 @@ const requiresAuth = async (req, res, next) => {
   if (token) {
     // do logic here
     try {
-      //wt.verify()함수를 이용하여 토큰 유효성을 확인할 수 있다.
+      //jwt.verify()함수를 이용하여 토큰 유효성을 확인할 수 있다.
       const { userId } = jwt.verify(token, process.env.JWT_SECRET);
       try {
         const user = await User.findById(userId);
@@ -16,20 +16,19 @@ const requiresAuth = async (req, res, next) => {
           const userToReturn = { ...user._doc };
           delete userToReturn.password;
           req.user = userToReturn;
-
           isAuthed = true;
         }
       } catch {
         isAuthed = false;
       }
     } catch {
-      isAuthed = flase;
+      isAuthed = false;
     }
   }
   if (isAuthed) {
     return next();
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).send("허가되지 않았습니다.");
   }
 };
 

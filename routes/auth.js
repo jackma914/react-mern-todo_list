@@ -49,6 +49,8 @@ router.post("/register", async (req, res) => {
     //save the user to the database
     const savedUser = await newUser.save();
 
+    //---------------------------------------------------------------------------------------------------------
+
     //_doc속성은 각 문서 객체의 정보를 담고 있습니다.
     const userToReturn = { ...savedUser._doc };
 
@@ -74,7 +76,6 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({
       email: new RegExp("^" + req.body.email + "$", "i"),
     });
-
     if (!user) {
       return res
         .status(400)
@@ -87,7 +88,6 @@ router.post("/login", async (req, res) => {
       req.body.password,
       user.password
     );
-
     if (!passwordMatch) {
       return res.status(400).json({
         error: "There was a problem with your login credentials",

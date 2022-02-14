@@ -1,3 +1,6 @@
+// &&, || 논리연산입니다. 하나라도 true이다면 true를 반환합니다.
+//isEmpty 입력한 데이터가 비어있는 데이터인지를 구별합니다.
+
 const isEmpty = (value) =>
   value === undefined ||
   value === null ||

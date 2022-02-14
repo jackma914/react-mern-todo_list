@@ -3,6 +3,7 @@ require("dotenv").config();
 
 //import routes
 const authRoute = require("./routes/auth");
+const toDosRoute = require("./routes/todos");
 
 //mongoose
 const mongoose = require("mongoose");
@@ -27,7 +28,9 @@ app.get("/api", (req, res) => {
   res.send("fullstack react course express server");
 });
 
+// 라우트해줍니다.
 app.use("/api/auth", authRoute);
+app.use("/api/todos", toDosRoute);
 
 //mongoose와 연결한뒤에 서버를 시작합니다.
 mongoose

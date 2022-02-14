@@ -33,7 +33,7 @@ const validateRegisterInput = (data) => {
   if (isEmpty(data.confirmPassword)) {
     errors.confirmPassword = "Confirm Password field can not be empty";
 
-    //password와 confirmPassword가 같은지를 비교하는 equals 메서드입니다.
+    //password와 confirmPassword가 문자열이 일치하는지 검증합니다.
   } else if (!Validator.equals(data.password, data.confirmPassword)) {
     errors.confirmPassword = "Password and Confirm Password field must match";
   }
