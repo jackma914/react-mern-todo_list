@@ -1,0 +1,148 @@
+//Source Sans Pro 폰트
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap");
+
+//sass 는 변수 사용이 가능합니다. 변수선언은 달러 표시 $ 로 시작합니다.
+$primary: #00a796;
+$primary-dark: #026158;
+$dark: #1f2732;
+$dark-light: #2a343f;
+$white: #fff;
+$red: #fc6666;
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: $dark;
+  color: $white;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+// ----
+
+.main-header {
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__left {
+    a {
+      color: $white;
+      font-weight: 700;
+      font-size: 2rem;
+      text-decoration: none;
+
+      //transition과 hover를 이용해서 button에 마우스를 가져가면 색이 흐려지는 효과를 구현할수있습니다.
+      transition: all 0.3s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.btn {
+  display: inline-block;
+  background-color: $primary;
+  padding: 10px 20px;
+  border: none;
+  color: $white;
+  border-radius: 5px;
+  font-size: 1rem;
+  transform: all 0.2s ease;
+
+  &:hover {
+    background-color: $primary-dark;
+    cursor: pointer;
+  }
+}
+//---
+
+.auth {
+  display: flex;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: center;
+
+  &__box {
+    max-width: 500px;
+    width: 100%;
+    padding: 50px;
+    background-color: $dark-light;
+    color: $white;
+    border-radius: 5px;
+  }
+
+  &__header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__field {
+    margin-bottom: 30px;
+
+    label {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      background-color: $dark;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      color: $white;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__footer {
+    .btn {
+      width: 100%;
+    }
+
+    .auth__error {
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.25rem;
+    }
+  }
+
+  &__error {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: $red;
+  }
+}
