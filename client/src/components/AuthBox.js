@@ -1,140 +1,43 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useGlobalContext } from "../context/GlobalContext";
+import React from "react";
 
 function AuthBox({ register }) {
-  const { getCurrentUser, user } = useGlobalContext();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    if (user && navigate) {
-      navigate("/dashboard");
-    }
-  }, [user, navigate]);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    let data = {};
-
-    if (register) {
-      data = {
-        name,
-        email,
-        password,
-        confirmPassword,
-      };
-    } else {
-      data = {
-        email,
-        password,
-      };
-    }
-
-    axios
-      .post(register ? "/api/auth/register" : "/api/auth/login", data)
-      .then(() => {
-        //TODO
-
-        getCurrentUser();
-      })
-      .catch((err) => {
-        setLoading(false);
-        if (err?.response?.data) {
-          setErrors(err.response.data);
-        }
-      });
-  };
-
   return (
     <div className="auth">
       <div className="auth__box">
         <div className="auth__header">
-          <h1>{register ? "Register" : "Login"}</h1>
+          <h1>{true ? "Register" : "Login"}</h1>
         </div>
 
-        <form onSubmit={onSubmit}>
+        <form>
           {register && (
             <div className="auth__field">
               <label> Name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {errors.name && <p className="auth__error">{errors.name}</p>}
+              <input type="text" />
             </div>
           )}
 
           <div className="auth__field">
             <label> Email</label>
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {errors.email && <p className="auth__error">{errors.email}</p>}
+            <input type="text" />
           </div>
 
           <div className="auth__field">
             <label> Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {errors.password && (
-              <p className="auth__error">{errors.password}</p>
-            )}
+            <input type="password" />
           </div>
 
           {register && (
             <div className="auth__field">
               <label>Confirm Password</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              {errors.confirmPassword && (
-                <p className="auth__error">{errors.confirmPassword}</p>
-              )}
+              <input type="password" />
 
               {/* <p className="auth__error">Something went wrong</p> */}
             </div>
           )}
 
           <div className="auth__footer">
-            {Object.keys(errors).length > 0 && (
-              <p className="auth__error">
-                {register ? "You have some validation errors" : errors.error}{" "}
-              </p>
-            )}
-            <button className="btn" type="submit" disabled={loading}>
-              {register ? "Register" : "Login"}
-            </button>
-
-            {!register ? (
-              <div className="auth__register">
-                <p>
-                  Not a member? <Link to="/register">Register Now</Link>
-                </p>
-              </div>
-            ) : (
-              <div className="auth__register">
-                <p>
-                  Already a member? <Link to="/">Login Now</Link>
-                </p>
-              </div>
-            )}
+            <p className="auth__error">Something went wrong</p>
+            <button className="btn">{register ? "Register" : "Login"}</button>
           </div>
         </form>
       </div>
