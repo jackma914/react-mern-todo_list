@@ -1,3 +1,8 @@
+//redux는 전역상태를 관리하기에 좋은 도구이다.하지만 react에서 redux를 사용하려고 하면 꽤 많은 boilerplate code를 생성해야하는 단점이 있다.
+//(물론 redux hook을 사용하면 많이 줄어든다.)
+//redux없이 react에서 제공하는 Context API를 이용하면 전역 상태를 redux와 유사하게 구현할 수 있다.
+//이와 더불어 useContext, useReducer 훅을 사용하면 구현이 더더욱 쉬워진다.
+
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
 
@@ -57,6 +62,7 @@ export const GlobalProvider = (props) => {
   const getCurrentUser = async () => {
     try {
       const res = await axios.get("/api/auth/current");
+
       if (res.data) {
         const toDosRes = await axios.get("/api/todos/current");
         if (toDosRes.data) {
@@ -82,7 +88,6 @@ export const GlobalProvider = (props) => {
   const logout = async () => {
     try {
       await axios.put("/api/auth/logout");
-
       dispatch({ type: "RESET_USER" });
     } catch (err) {
       console.log(err);
