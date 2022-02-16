@@ -4,17 +4,23 @@ import React from "react";
 function AuthBox() {
 =======
 function AuthBox({ register }) {
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
   return (
     <div className="auth">
       <div className="auth__box">
         <div className="auth__header">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <h1>Login</h1>
         </div>
 
         <form>
 =======
+=======
+>>>>>>> parent of f476f67 (ADD Client authorisation)
           <h1>{true ? "Register" : "Login"}</h1>
         </div>
 
@@ -53,6 +59,9 @@ function AuthBox({ register }) {
           <div className="auth__footer">
             <p className="auth__error">Something went wrong</p>
             <button className="btn">{register ? "Register" : "Login"}</button>
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
           </div>
         </form>

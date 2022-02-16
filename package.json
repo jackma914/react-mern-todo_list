@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "//": " 서버와 클라이언트를 동시에 실행하게 해주는 concurrently를 이용합니다.",
     "//": " server의 --ignore client는 클라이언트 폴터에 파일 변경 사항이 있는 경우 서버를 다시 시작하지 않는다는 의미입니다",
     "server": "nodemon server.js --ignore client",
     "client": "cd client && npm start",
@@ -29,6 +28,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.3.1",
     "mongoose": "^6.2.1",
     "validator": "^13.7.0"
   },

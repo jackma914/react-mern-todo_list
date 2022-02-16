@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 //bodyParser 미들웨어의 여러 옵션 중에 하나로 false 값일 시 node.js에 기본으로 내장된 queryString, true 값일 시 따로 설치가 필요한 npm qs 라이브러리를 사용합니다.
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 //본문
 app.get("/api", (req, res) => {

@@ -3,10 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import AuthBox from "./AuthBox";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function Layout() {
   return (
 =======
+=======
+>>>>>>> parent of f476f67 (ADD Client authorisation)
 import { useGlobalContext } from "../context/GlobalContext";
 
 function Layout() {
@@ -27,6 +30,9 @@ function Layout() {
         <Route path="/test" element={<h1>Test</h1>}></Route>
 =======
         <Route path="/register" element={<AuthBox register />}></Route>
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
       </Routes>
     </BrowserRouter>
