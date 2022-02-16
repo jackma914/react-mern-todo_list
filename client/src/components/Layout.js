@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import AuthBox from "./AuthBox";
+import { useGlobalContext } from "../context/GlobalContext";
 
 function Layout() {
   const { fetchingUser } = useGlobalContext();
@@ -16,7 +17,6 @@ function Layout() {
       <Header />
       <Routes>
         <Route exact path="/" element={<AuthBox />}></Route>
-        <Route path="/test" element={<h1>Test</h1>}></Route>
         <Route path="/register" element={<AuthBox register />}></Route>
       </Routes>
     </BrowserRouter>
