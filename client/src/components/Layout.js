@@ -5,10 +5,13 @@ import AuthBox from "./AuthBox";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function Layout() {
   return (
 =======
+=======
+>>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
@@ -35,6 +38,9 @@ function Layout() {
         <Route path="/register" element={<AuthBox register />}></Route>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
