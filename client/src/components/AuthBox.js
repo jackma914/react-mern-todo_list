@@ -5,6 +5,9 @@ function AuthBox() {
 =======
 function AuthBox({ register }) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
@@ -14,11 +17,14 @@ function AuthBox({ register }) {
         <div className="auth__header">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <h1>Login</h1>
         </div>
 
         <form>
 =======
+=======
+>>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
           <h1>{true ? "Register" : "Login"}</h1>
@@ -60,6 +66,9 @@ function AuthBox({ register }) {
             <p className="auth__error">Something went wrong</p>
             <button className="btn">{register ? "Register" : "Login"}</button>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)

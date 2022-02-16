@@ -4,10 +4,13 @@ import Header from "./Header";
 import AuthBox from "./AuthBox";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function Layout() {
   return (
 =======
+=======
+>>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
 import { useGlobalContext } from "../context/GlobalContext";
@@ -31,6 +34,9 @@ function Layout() {
 =======
         <Route path="/register" element={<AuthBox register />}></Route>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of f476f67 (ADD Client authorisation)
+=======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)

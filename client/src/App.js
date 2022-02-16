@@ -5,8 +5,11 @@ function App() {
   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div>
 =======
+=======
+>>>>>>> parent of f476f67 (ADD Client authorisation)
 =======
 >>>>>>> parent of f476f67 (ADD Client authorisation)
     <GlobalProvider>
