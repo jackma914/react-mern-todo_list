@@ -76,9 +76,6 @@ router.post("/login", async (req, res) => {
       email: new RegExp("^" + req.body.email + "$", "i"),
     });
 
-    console.log(user.password);
-    console.log(user._id);
-
     if (!user) {
       return res
         .status(400)
@@ -126,25 +123,11 @@ router.post("/login", async (req, res) => {
 // @desc    Return the currently authed user
 // @access  Private
 router.get("/current", requiresAuth, (req, res) => {
-  // console.log(req.user);
-  console.log(req.user);
-  if (!req.user) {
+  console.log(req.user1);
+  if (!req.user1) {
     return res.status(401).send("권한이 없습니다.");
   }
-  return res.json(req.user);
+  return res.json(req.user1);
 });
 
 module.exports = router;
-
-// 사용자의 컴퓨터가 현재 가지고 있는 쿠키를 확인 하는 방법은
-// req.cookies.[cookie name] 입니다.
-// 쿠키를 저장하는 방법은
-// res.cookie(‘cookie name’, ‘cookie value’, option)입니다.
-// res.cookie() 메소드는 쿠키의 옵션을 설정 할 수 있습니다.
-// maxAge: 쿠키의 만료 시간을 밀리초 단위로 설정
-// expires: 쿠키의 만료 시간을 표준 시간 으로 설정
-// path: 쿠키의 경로 (default: /)
-// domain: 쿠키의 도메인 이름 (default: loaded)
-// secure: HTTPS 프로토콜만 쿠키 사용 가능
-// httpOnly: HTTP 프로토콜만 쿠키 사용 가능
-// signed: 쿠키의 서명 여부를 결정

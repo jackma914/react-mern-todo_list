@@ -7,6 +7,7 @@ const requiresAuth = async (req, res, next) => {
 
   if (token) {
     try {
+      //verify 메서드를 이용해 토큰 인증을 합니다.
       const { userId } = jwt.verify(token, process.env.JWT_SECRET);
 
       //   console.log(userId);
@@ -17,6 +18,8 @@ const requiresAuth = async (req, res, next) => {
             ...user._doc,
           };
           delete userToReturn.password;
+
+          //req.user로 password가 지워진 user값을 보냅니다.
           req.user = userToReturn;
           isAuthed = true;
         }

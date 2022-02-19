@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 // import route
 const authRoute = require("./routes/auth");
+const todoRoute = require("./routes/todos");
 
 const express = require("express");
 const app = express();
@@ -19,6 +20,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/auth", authRoute);
+app.use("/api/todos", todoRoute);
 
 // mongoose 서버와 연결
 mongoose
