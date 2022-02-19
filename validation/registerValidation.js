@@ -1,5 +1,5 @@
 const Validator = require("validator");
-const isEmpty = require("./inEmpty");
+const isEmpty = require("./isEmpty");
 
 const validateRegisterInput = (data) => {
   let errors = {};

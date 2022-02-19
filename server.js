@@ -1,5 +1,8 @@
 require("dotenv").config();
 
+// cookie parser
+const cookieParser = require("cookie-parser");
+
 const mongoose = require("mongoose");
 
 // import route
@@ -9,6 +12,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cookieParser());
 
 app.get("/api", (req, res) => {
   res.send("Fullstack React Course Express server");

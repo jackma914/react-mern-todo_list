@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-
+const jwt = require("jsonwebtoken");
+const requiresAuth = require("../middleware/permission");
 const validateRegisterInput = require("../validation/registerValidation");
 
 //비밀번호 암호화
@@ -52,8 +53,12 @@ router.post("/register", async (req, res) => {
     // 유저 정보 database에 저장
     const savedUser = await newUser.save();
 
+    // 데이터 베이스에 저장된 비밀번호를 return res 하기전에 비밀번호를 삭제후 return 합니다. 이유는 단순 보안이슈입니다.
+    const userToReturn = { ...savedUser._doc };
+    delete userToReturn.password;
+
     //return 새로운 유저
-    return res.json(savedUser);
+    return res.json(userToReturn);
   } catch (err) {
     //에러 메시지
     console.log(err);
@@ -61,4 +66,85 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// @route   POST / api/auth/login
+// @desc    Login user and return a access token
+// @access  Public
+router.post("/login", async (req, res) => {
+  try {
+    // 유저 확인
+    const user = await User.findOne({
+      email: new RegExp("^" + req.body.email + "$", "i"),
+    });
+
+    console.log(user.password);
+    console.log(user._id);
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ error: "There was a problem with your login credentials" });
+    }
+
+    // bcrypt의 compare메서드를 이용한 비밀번호 비교확인
+    const passwordMatch = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!passwordMatch) {
+      return res
+        .status(400)
+        .json({ error: "There was a problem with your login credentials" });
+    }
+
+    // 토큰 생성
+    const payload = { userId: user._id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.cookie("access-token", token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    const userToReturn = { ...user._doc };
+
+    delete userToReturn.password;
+
+    console.log(`토큰 생성 완료`);
+    return res.json({
+      token: token,
+      user: userToReturn,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err.message);
+  }
+});
+
+// @route   GET / api/auth/current
+// @desc    Return the currently authed user
+// @access  Private
+router.get("/current", requiresAuth, (req, res) => {
+  // console.log(req.user);
+  console.log(req.user);
+  if (!req.user) {
+    return res.status(401).send("권한이 없습니다.");
+  }
+  return res.json(req.user);
+});
+
 module.exports = router;
+
+// 사용자의 컴퓨터가 현재 가지고 있는 쿠키를 확인 하는 방법은
+// req.cookies.[cookie name] 입니다.
+// 쿠키를 저장하는 방법은
+// res.cookie(‘cookie name’, ‘cookie value’, option)입니다.
+// res.cookie() 메소드는 쿠키의 옵션을 설정 할 수 있습니다.
+// maxAge: 쿠키의 만료 시간을 밀리초 단위로 설정
+// expires: 쿠키의 만료 시간을 표준 시간 으로 설정
+// path: 쿠키의 경로 (default: /)
+// domain: 쿠키의 도메인 이름 (default: loaded)
+// secure: HTTPS 프로토콜만 쿠키 사용 가능
+// httpOnly: HTTP 프로토콜만 쿠키 사용 가능
+// signed: 쿠키의 서명 여부를 결정
