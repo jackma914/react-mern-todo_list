@@ -7,6 +7,7 @@ const validateRegisterInput = require("../validation/registerValidation");
 
 //비밀번호 암호화
 const bcrypt = require("bcryptjs");
+const { json } = require("express/lib/response");
 
 // @route   GET / api/auth/test
 // @desc    Test the auth route
@@ -52,6 +53,19 @@ router.post("/register", async (req, res) => {
     });
     // 유저 정보 database에 저장
     const savedUser = await newUser.save();
+
+    // 토큰 생성
+    // 회원가입시 즉시 로그인이 되는 기능입니다.
+    const payload = { userId: savedUser._id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.cookie("access-token", token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
 
     // 데이터 베이스에 저장된 비밀번호를 return res 하기전에 비밀번호를 삭제후 return 합니다. 이유는 단순 보안이슈입니다.
     const userToReturn = { ...savedUser._doc };
@@ -123,11 +137,24 @@ router.post("/login", async (req, res) => {
 // @desc    Return the currently authed user
 // @access  Private
 router.get("/current", requiresAuth, (req, res) => {
-  console.log(req.user1);
-  if (!req.user1) {
+  console.log(req.user);
+  if (!req.user) {
     return res.status(401).send("권한이 없습니다.");
   }
-  return res.json(req.user1);
+  return res.json(req.user);
+});
+
+// @route   PUT / api/auth/logout
+// @desc    Logout user a clear the cookie
+// @access  Private
+router.put("/logout", requiresAuth, async (req, res) => {
+  try {
+    res.clearCookie("access-token");
+    return res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err.message);
+  }
 });
 
 module.exports = router;
