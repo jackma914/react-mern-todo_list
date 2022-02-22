@@ -16,7 +16,7 @@ const validateRegisterInput = (data) => {
 
   // 이름 검사 필드
   if (isEmpty(data.name)) {
-    errors.password = "Name field can not be empty";
+    errors.name = "Name field can not be empty";
 
     // Validater의 isLength 메서드를 이용해 비밀번호의 최소,최대 숫자수를 정해서 검사할수 있습니다.
   } else if (!Validator.isLength(data.name, { min: 2, max: 30 })) {

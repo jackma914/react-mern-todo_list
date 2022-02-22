@@ -1,6 +1,6 @@
 import "./main.scss";
 import Layout from "./components/Layout";
-import { GlobalProvider } from "./context/GloalContext";
+import { GlobalProvider } from "./context/GlobalContext";
 
 function App() {
   return (

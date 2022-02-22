@@ -76,6 +76,12 @@ textarea {
   border-radius: 5px;
   font-size: 1rem;
   transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   &:hover {
     background-color: $primary-dark;
@@ -108,7 +114,7 @@ textarea {
   &__field {
     margin-bottom: 30px;
 
-    laber {
+    label {
       font-size: 1.5rem;
       display: block;
       margin-bottom: 10px;
@@ -121,6 +127,7 @@ textarea {
       border: none;
       border-radius: 5px;
       color: $white;
+      font-size: 1.25rem;
 
       &:focus {
         outline: none;
@@ -144,6 +151,25 @@ textarea {
     font-size: 1rem;
     margin-top: 10px;
     color: $red;
+  }
+
+  &__register {
+    text-align: center;
+    margin-top: 20px;
+
+    p {
+      margin-bottom: 0;
+    }
+    a {
+      color: $white;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
 }
 
