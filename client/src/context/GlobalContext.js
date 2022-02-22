@@ -97,11 +97,45 @@ export const GlobalProvider = (props) => {
     });
   };
 
+  const toDoComplete = (toDo) => {
+    dispatch({
+      type: "SET_INCOMPLETE_TODOS",
+      payload: state.incompleteToDos.filter(
+        (incompleteToDo) => incompleteToDo._id !== toDo._id
+      ),
+    });
+
+    dispatch({
+      type: "SET_COMPLETE_TODOS",
+      payload: [toDo, ...state.completeToDos],
+    });
+  };
+
+  const toDoIncomplete = (toDo) => {
+    dispatch({
+      type: "SET_COMPLETE_TODOS",
+      payload: state.completeToDos.filter(
+        (completeToDo) => completeToDo._id !== toDo._id
+      ),
+    });
+
+    const newInompleteToDos = [toDo, ...state.incompleteToDos];
+
+    dispatch({
+      type: "SET_INCOMPLETE_TODOS",
+      payload: newInompleteToDos.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      ),
+    });
+  };
+
   const value = {
     ...state,
     getCurrentUser,
     logout,
     addToDo,
+    toDoComplete,
+    toDoIncomplete,
   };
   return (
     <GlobalContet.Provider value={value}>
