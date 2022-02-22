@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useGlobalContext } from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import ToDoCart from "./ToDoCard";
 
 function Dashboard() {
-  const { user } = useGlobalContext();
+  const { user, completeToDos, incompleteToDos } = useGlobalContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,7 +13,24 @@ function Dashboard() {
     }
   }, [user, navigate]);
 
-  return <h1>Dashboard</h1>;
+  return (
+    <div className="dashboard">
+      <div className="todos">
+        {incompleteToDos.map((toDo) => (
+          <ToDoCart toDo={toDo} key={toDo._id}></ToDoCart>
+        ))}
+      </div>
+
+      {completeToDos.length > 0 && (
+        <div className="todos">
+          <h2 className="todos__title">Complete ToDo's</h2>
+          {completeToDos.map((toDo) => (
+            <ToDoCart toDo={toDo} key={toDo._id}></ToDoCart>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default Dashboard;

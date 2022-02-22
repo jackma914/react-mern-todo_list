@@ -67,7 +67,7 @@ export const GlobalProvider = (props) => {
             payload: toDosRes.data.complete,
           });
           dispatch({
-            type: "SET_COMPLETE_TODOS",
+            type: "SET_INCOMPLETE_TODOS",
             payload: toDosRes.data.incomplete,
           });
         }
