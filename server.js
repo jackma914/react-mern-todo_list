@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 
 // cookie parser
 const cookieParser = require("cookie-parser");
@@ -21,6 +22,11 @@ app.get("/api", (req, res) => {
 
 app.use("/api/auth", authRoute);
 app.use("/api/todos", todoRoute);
+
+app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 // mongoose 서버와 연결
 mongoose
