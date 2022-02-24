@@ -1,4 +1,3 @@
-const { Timestamp } = require("mongodb");
 const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema(
@@ -23,7 +22,3 @@ const UserSchema = new Schema(
     timestamps: true,
   }
 );
-
-// export the model
-const User = model("User", UserSchema);
-module.exports = User;
