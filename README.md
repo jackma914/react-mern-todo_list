@@ -54,7 +54,6 @@ ToDo List를 작성해 주세요. 😎
 
 |[🔗 삭제](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%EB%8B%AC%EB%A0%A5-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%86%8C%EA%B0%9C)|[🔗 완료](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%EB%8B%AC%EB%A0%A5-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%86%8C%EA%B0%9C)|[🔗 로그아웃](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%EB%8B%AC%EB%A0%A5-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%86%8C%EA%B0%9C)|
 |:--:|:--:|:--:|:--:|
-|<img width='500' src='/client/images/삭제.gif'>>|<img width='500' src='/client/images/완료.gif'>|<img width='500' src='/client/images/로그아웃.jpg'>|<img width='500' src='https://i.imgur.com/65Iq6xY.png'>|
-
+|<img width='500' src='/client/images/삭제.gif'>>|<img width='500' src='/client/images/완료.gif'>|<img width='500' src='/client/images/로그아웃.jpg'>|
 
 
