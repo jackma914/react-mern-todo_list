@@ -27,9 +27,9 @@ ToDo List를 작성해 주세요. 😎
 |:--:|:--:|:--:|:--:|
 |<img width='500' src='/client/images/회원가입.jpg'>|<img width='500' src='/client/images/로그인.jpg'>|<img width='500' src='/client/images/추가.gif'>|<img width='500' src='/client/images/수정.gif'>|
 
-|[🔗 todo 삭제](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%ED%86%B5%EA%B3%84-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%86%8C%EA%B0%9C)|[🔗 todo 완료](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%EC%B1%84%ED%8C%85-%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)|[🔗 로그아웃](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%ED%83%9C%EA%B7%B8-%ED%8E%98%EC%9D%B4%EC%A7%80)|
-|:--:|:--:|:--:|
-|<img width='500' src='/client/images/삭제.gif'>|<img width='500' src='/client/images/완료.gif'>|<img width='500' src='/client/images/로그아웃.gif'>|
+|[🔗 todo 삭제](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%ED%86%B5%EA%B3%84-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%86%8C%EA%B0%9C)|[🔗 todo 완료](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%EC%B1%84%ED%8C%85-%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)|[🔗 로그아웃](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%ED%83%9C%EA%B7%B8-%ED%8E%98%EC%9D%B4%EC%A7%80)|[🔗 유효성 검사](https://github.com/boostcamp-2020/Project16-A-Account-Book/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C#-%ED%83%9C%EA%B7%B8-%ED%8E%98%EC%9D%B4%EC%A7%80)|
+|:--:|:--:|:--:|:--:|
+|<img width='500' src='/client/images/삭제.gif'>|<img width='500' src='/client/images/완료.gif'>|<img width='500' src='/client/images/로그아웃.gif'>|<img width='500' src='/client/images/유효성.jpg'>|
 
 
 
