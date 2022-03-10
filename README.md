@@ -12,14 +12,18 @@
         <img src="https://img.shields.io/badge/Express-^4.17.2-yellow?logo=white" />
 </p>
 
-
+<br>
 
 ## 🏠 [ToDo](https://to-todo.herokuapp.com/)
 
 ToDo List를 작성해 주세요. 😎
 
+<br>
+
 ## 📌 ToDo List 소개
 > - 할일은 추가, 수정, 삭제, 완료가 가능한 심플한 ToDo 서비스 입니다.
+
+<br>
 
 ## 📌 주요 기능
 
@@ -31,7 +35,7 @@ ToDo List를 작성해 주세요. 😎
 |:--:|:--:|:--:|:--:|
 |<img width='500' src='/client/images/삭제.gif'>|<img width='500' src='/client/images/완료.gif'>|<img width='500' src='/client/images/로그아웃.gif'>|<img width='500' src='/client/images/유효성.jpg'>|
 
-
+<br>
 
 ## 📌 플로우 차트
 
