@@ -41,7 +41,7 @@ function ToDoCard({ toDo }) {
   const deleteToDo = (e) => {
     e.preventDefault();
 
-    if (window.confirm("Are you sure you want to delete this ToDo?")) {
+    if (window.confirm("이 ToDo를 삭제하시겠습니까?")) {
       axios.delete(`/api/todos/${toDo._id}`).then(() => {
         removeToDo(toDo);
       });
