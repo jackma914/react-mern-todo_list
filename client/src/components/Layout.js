@@ -9,7 +9,7 @@ function Layout() {
   const { fetchingUser } = useGlobalContext();
 
   return fetchingUser ? (
-    <div className="loading">Loading</div>
+    <div className="loading">Loading...</div>
   ) : (
     <BrowserRouter>
       <Header />

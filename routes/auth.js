@@ -7,7 +7,6 @@ const validateRegisterInput = require("../validation/registerValidation");
 
 //비밀번호 암호화
 const bcrypt = require("bcryptjs");
-const { json } = require("express/lib/response");
 
 // @route   GET / api/auth/test
 // @desc    Test the auth route
