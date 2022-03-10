@@ -1,6 +1,6 @@
 ## ToDo List App
 <p align='center'>
-<img width='50%' src='/images/client/로그인.jpg'>
+<img width='50%' src='/client/images/로그인.jpg'>
 </p>
 
 <p align='center'>
