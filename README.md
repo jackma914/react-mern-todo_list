@@ -23,6 +23,6 @@ ToDo List를 작성해 주세요. 😎
 
 ## 📌 주요 기능
 
-|[🔗 로그인](https://github.com/jackma914/react-mern-todo_list/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C-%ED%8E%98%EC%9D%B4%EC%A7%80)
+|[🔗 로그인](https://github.com/jackma914/react-mern-todo_list/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B8%B0%EB%8A%A5-%EC%9E%85%EB%8B%88%EB%8B%A4.)
 
 
