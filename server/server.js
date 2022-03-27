@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 
 //express.json()을 이용해 json 요청을 구현합니다.
 app.use(express.json());
@@ -18,6 +19,14 @@ app.post("/name", (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`${process.env.PORT} 서버가 실행 되었습니다. `);
-});
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("데이터 베이스와 연결되었습니다.");
+    app.listen(process.env.PORT, () => {
+      console.log(`${process.env.PORT} 서버가 실행 되었습니다. `);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
