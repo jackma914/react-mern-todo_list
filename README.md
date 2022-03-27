@@ -1,4 +1,7 @@
 ## ToDo List App
+
+<br>
+
 <p align='center'>
 <img width='50%' src='/client/images/로그인.jpg'>
 </p>
@@ -13,6 +16,7 @@
         <img src="https://img.shields.io/badge/mongoose-v6.3.2-critical?logo=mongodb"/>
     <img src="https://img.shields.io/badge/JWT-^8.5.1-white?logo=JSON Web Tokens" />
         <img src="https://img.shields.io/badge/Express-^4.17.2-yellow?logo=white" />
+            <img src="https://img.shields.io/badge/Heroku-4D4D4D?logo=Heroku" />
 </p>
 
 <br>
