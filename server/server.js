@@ -3,6 +3,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
+// routes 임포트
+const authRoute = require("./routes/auth");
+
 //express.json()을 이용해 json 요청을 구현합니다.
 app.use(express.json());
 app.use(express.urlencoded());
@@ -18,6 +21,8 @@ app.post("/name", (req, res) => {
     return res.status(400).json({ error: " 이름이 제공되지 않았습니다. " });
   }
 });
+
+app.use("/api/auth", authRoute);
 
 mongoose
   .connect(process.env.MONGO_URI)

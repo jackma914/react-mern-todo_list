@@ -49,3 +49,72 @@
          console.log(err);
        });
      ```
+
+4. User 스키마를 생성하고 서버 route를 구현합니다.
+
+   - 스키마의 생성방법은 적지 않겠습니다.
+   - route를 구현합니다. routes 폴더를 만들고 auth.js 를 생성합니다. 그리고 server.js에서 경로를 지정해줍니다.
+     /api/auth 경로로 데이터가 오면 /test로 이동합니다.
+     postman을 이용해 `http://localhost:5000/api/auth/test` 경로로 들어가면 "route 작동" 이라는 메시지를 볼수 있습니다.
+
+   ```js
+   const express = requre("express");
+   const router = express.Router();
+
+   router.get("/test", (req, res) => {
+     res.send("route 작동");
+   });
+   // 모듈을 내보냅니다.
+   module.exports = router;
+   ```
+
+   ```js
+   // 모듈을 받아오면 두번째 인자로 연결해줍니다.
+   app.use("/api/auth", authRoute);
+   ```
+
+5. 사용자 회원가입
+
+   - /register 주소로 새로운 User를 생성하고 데이터 베이스에 저장합니다.
+
+   ```js
+   //@route  POST /api/auth/register
+   //@설명   새로운 유저 생성
+   //@access Public
+   router.post("/register", async (req, res) => {
+     try {
+       // 새로운 유저 생성
+       const newUser = new User({
+         email: req.body.email,
+         password: req.body.password,
+         name: req.body.name,
+       });
+
+       // 데이터 베이스에 저장 await 비동기를 이용하여 저장이 완료되면 다음 작업을 합니다.
+       const savedUser = await newUser.save();
+
+       //return 새로운 유저
+       return res.json(savedUser);
+     } catch (err) {
+       console.log(err);
+       res.status(500).send(err.message);
+     }
+   });
+   ```
+
+   - 다음은 위에서 구현한 회원가입에서 보안을 위해 비밀번호를 hash로 만들겠습니다 bcryptjs 라이브러리를 이용하였습니다.
+
+     ```js
+      const bcrypt = require("bcryptjs");
+
+      ...
+        // 받아온 비밀번호를 hash 비밀번호로 바꾸어 새로운 유저를 생성합니다.
+       const hashedPassword = await bcrypt.hash(req.body.password, 12);
+
+       // 새로운 유저 생성
+       const newUser = new User({
+       email: req.body.email,
+       password: hashedPassword,
+       name: req.body.name,
+     });
+     ```
