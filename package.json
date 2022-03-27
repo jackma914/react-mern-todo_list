@@ -1,0 +1,29 @@
+{
+  "name": "react-mern-todo_list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon  cd server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackma914/react-mern-todo_list.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackma914/react-mern-todo_list/issues"
+  },
+  "homepage": "https://github.com/jackma914/react-mern-todo_list#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
