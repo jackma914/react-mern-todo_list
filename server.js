@@ -30,9 +30,10 @@ app.get("/api", (req, res) => {
 
 // 라우트해줍니다.
 app.use("/api/auth", authRoute);
-app.use("/api/todos", toDosRoute);
 
-//mongoose와 연결한뒤에 서버를 시작합니다.
+app.use("/api/todos", todoRoute);
+
+// mongoose 서버와 연결
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

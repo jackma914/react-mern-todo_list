@@ -1,0 +1,39 @@
+{
+  "name": "reacr-mern-todo_list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "//": " server의 --ignore client는 클라이언트 폴터에 파일 변경 사항이 있는 경우 서버를 다시 시작하지 않는다는 의미입니다",
+    "server": "nodemon server.js --ignore client",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackma914/react-mern-todo_list.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackma914/react-mern-todo_list/issues"
+  },
+  "homepage": "https://github.com/jackma914/react-mern-todo_list#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.3.1",
+    "mongoose": "^6.2.2",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
