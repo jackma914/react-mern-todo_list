@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 
 // routes 임포트
 const authRoute = require("./routes/auth");
+const toDosRoute = require("./routes/todos");
 
 //express.json()을 이용해 json 요청을 구현합니다.
 app.use(express.json());
@@ -25,6 +26,7 @@ app.post("/name", (req, res) => {
 });
 
 app.use("/api/auth", authRoute);
+app.use("/api/todos", toDosRoute);
 
 mongoose
   .connect(process.env.MONGO_URI)

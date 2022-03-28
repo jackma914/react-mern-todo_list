@@ -18,7 +18,6 @@ const requiresAuth = async (req, res, next) => {
         const user = await User.findById(userId);
 
         if (user) {
-          console.log(user);
           const userToReturn = { ...user._doc };
           delete userToReturn.password;
 

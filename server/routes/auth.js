@@ -85,7 +85,6 @@ router.post("/login", async (req, res) => {
     if (!passwordMatch) {
       return res.status(400).json({ error: "비밀번호를 확인해 주세요." });
     }
-    console.log(user);
     //jwt 토큰 생성
     const payload = { userId: user._id };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -115,9 +114,9 @@ router.post("/login", async (req, res) => {
 //@설명   현재 인증된 사용자를 반환
 //@access Private
 router.get("/current", requiresAuth, (req, res) => {
-  // if (!req.user) {
-  //   return res.status(401).send("권한이 없습니다.");
-  // }
+  if (!req.user) {
+    return res.status(401).send("권한이 없습니다.");
+  }
 
   return res.json(req.user);
 });
