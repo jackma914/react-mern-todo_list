@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const requiresAuth = require("../middleware/permisstion");
 
 const validateRegisterInput = require("../validation/registerValidation");
 
@@ -49,12 +51,75 @@ router.post("/register", async (req, res) => {
     // 데이터 베이스에 저장 await 비동기를 이용하여 저장이 완료되면 다음 작업을 합니다.
     const savedUser = await newUser.save();
 
+    //_doc 속성은 각 문서의 객체 정보를 담고 있어 그 안에 있는 password 속성 값을 확인할 수 있습니다.
+    //delete 연산자는 객체의 속성을 제거합니다.
+    const userToReturn = { ...savedUser._doc };
+    delete userToReturn.password;
+
     //return 새로운 유저
-    return res.json(savedUser);
+    return res.json(userToReturn);
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);
   }
+});
+
+//@route  POST /api/auth/login
+//@설명   사용자 로그인 및 액세스 토큰 반환
+//@access Public
+router.post("/login", async (req, res) => {
+  try {
+    // 사용자 이메일 확인합니다.
+    const user = await User.findOne({
+      email: new RegExp("^" + req.body.email + "$", "i"),
+    });
+    if (!user) {
+      return res.status(400).json({ error: "아이디를 확인해 주세요." });
+    }
+
+    // 비밀번호를 확인합니다.
+    const passwordMatch = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!passwordMatch) {
+      return res.status(400).json({ error: "비밀번호를 확인해 주세요." });
+    }
+    console.log(user);
+    //jwt 토큰 생성
+    const payload = { userId: user._id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    // jwt토큰 cookie에 저장
+    res.cookie("access-token", token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    const userToReturn = { ...user._doc };
+    delete userToReturn.password;
+
+    return res.json({
+      token: token,
+      user: userToReturn,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err.message);
+  }
+});
+
+//@route  GET /api/auth/current
+//@설명   현재 인증된 사용자를 반환
+//@access Private
+router.get("/current", requiresAuth, (req, res) => {
+  // if (!req.user) {
+  //   return res.status(401).send("권한이 없습니다.");
+  // }
+
+  return res.json(req.user);
 });
 
 module.exports = router;

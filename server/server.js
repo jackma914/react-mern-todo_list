@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 // routes 임포트
 const authRoute = require("./routes/auth");
@@ -9,6 +10,7 @@ const authRoute = require("./routes/auth");
 //express.json()을 이용해 json 요청을 구현합니다.
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("서버 테스트입니다");
