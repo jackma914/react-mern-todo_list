@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -19,6 +20,7 @@ router.get("/test", (req, res) => {
 //@access Public
 router.post("/register", async (req, res) => {
   try {
+    console.log(req.body);
     // 받아오는 데이터를 validation 모듈에 넣어줍니다.
     const { errors, isValid } = validateRegisterInput(req.body);
     //isValid가 false이면 무언가가 양식에 어긋나서 error를 반환했다는 의미입니다. errors를 return 해줍니다.
@@ -50,6 +52,19 @@ router.post("/register", async (req, res) => {
 
     // 데이터 베이스에 저장 await 비동기를 이용하여 저장이 완료되면 다음 작업을 합니다.
     const savedUser = await newUser.save();
+
+    // 회원가입과 동시에 토큰을 생성합니다.
+    //jwt 토큰 생성
+    const payload = { userId: savedUser._id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    // jwt토큰 cookie에 저장
+    res.cookie("access-token", token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
 
     //_doc 속성은 각 문서의 객체 정보를 담고 있어 그 안에 있는 password 속성 값을 확인할 수 있습니다.
     //delete 연산자는 객체의 속성을 제거합니다.
@@ -119,6 +134,20 @@ router.get("/current", requiresAuth, (req, res) => {
   }
 
   return res.json(req.user);
+});
+
+//@route  GET /api/auth/logout
+//@설명   로그아웃과 사용자 쿠키 지우기
+//@access Private
+router.put("/logout", requiresAuth, async (req, res) => {
+  try {
+    res.clearCookie("access-token");
+
+    return res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
 });
 
 module.exports = router;

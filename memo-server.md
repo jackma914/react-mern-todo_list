@@ -375,7 +375,7 @@
       });
       ```
 
-8.  todo model과 todo route을 설정하고 새로운 todo를 생성해보겠습니다. todo model은 따로 설명하지 않겠습니다.
+8.  todo CRUD 구현합니다. todo model과 todo route을 설정하고 새로운 todo를 생성해보겠습니다. todo model은 따로 설명하지 않겠습니다.
 
     - 새로운 todo 생성합니다. 현재 사용자를 권한을 확인한뒤 content를 추가합니다.
 
@@ -436,3 +436,175 @@
         }
       });
       ```
+
+    - todo를 완료 표시로 업데이트 합니다. 업데이트 부분에서 많이 어려워서 햇갈렸습니다. 하나씩 차근차근 해석해보겠습니다.
+      아래 코드에서 /:toDoId는 `_id` 와 일치해야합니다.
+      user: req.user.\_id는 user의 \_id 이이고
+      \_id: req.params.toDoId는 몽구스에서 기본적으로 생성되는 \_id입니다.
+
+      ```js
+      // @route   PUT /api/todos/:toDoId/complete
+      // @설명    todo를 완료 표시
+      // @access  Private
+      router.put("/:toDoId/complete", requiresAuth, async (req, res) => {
+        try {
+          console.log(req.user);
+          const toDo = await ToDo.findOne({
+            user: req.user._id,
+            _id: req.params.toDoId,
+          });
+
+          if (!toDo) {
+            return res.status(404).json({ error: "todo를 찾을 수 없습니다." });
+          }
+
+          if (toDo.complete) {
+            return res
+              .status(400)
+              .json({ error: "todo는 이미 완료되었습니다. " });
+          }
+
+          const updatedToDo = await ToDo.findOneAndUpdate(
+            {
+              user: req.user._id,
+              id: req.params.toDoId,
+            },
+            {
+              complete: true,
+              completedAt: new Date(),
+            },
+            {
+              new: true,
+            }
+          );
+
+          return res.json(updatedToDo);
+        } catch (err) {
+          console.log(err);
+          return res.status(500).send(err.message);
+        }
+      });
+      ```
+
+    - 로그인하면 토큰이 생성됩니다. 이번에는 구현할것은 회원가입시 즉시 토큰이 로그인이되면 토큰이 발급되도록 구현하겠습니다.
+      기존 login에 있던 jwt 토큰 생성 코드를 register 쪽으로 복사해서 가져갑니다. payload값으로 savedUser.\_id값으로 바꿔줍니다.
+
+      ```js
+      //@route  POST /api/auth/register
+      //@설명   새로운 유저 생성
+      //@access Public
+      router.post("/register", async (req, res) => {
+        try {
+          ...
+
+          // 데이터 베이스에 저장 await 비동기를 이용하여 저장이 완료되면 다음 작업을 합니다.
+          const savedUser = await newUser.save();
+
+          // 회원가입과 동시에 토큰을 생성합니다.
+          //jwt 토큰 생성
+          const payload = { userId: savedUser._id };
+          const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+          });
+
+          // jwt토큰 cookie에 저장
+          res.cookie("access-token", token, {
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+          });
+          ...
+
+      });
+      ```
+
+    * 마지막으로 로그아웃을 구현합니다. 로그아웃은 clearCookie 메서드로 토큰 이름을 인자로 넣습니다.
+
+    ```js
+    //@route  GET /api/auth/logout
+    //@설명   로그아웃과 사용자 쿠키 지우기
+    //@access Private
+    router.put("/logout", requiresAuth, async (req, res) => {
+      try {
+        res.clearCookie("access-token");
+
+        return res.json({ success: true });
+      } catch (err) {
+        console.log(err);
+        res.status(500).send(err.message);
+      }
+    });
+    ```
+
+======================
+
+auth.js
+
+1.  reigster POST async /api/auth/register
+
+    - `validateRegisterInput(req.body)` validation 모듈을 이용한 유효성 검사
+    - await `existingEmail` 기존 사용자 확인, 데이터 베이스와 req.body.email을 비교합니다.
+    - await `hashedPassword` bcryptjs를 이용해 비밀번호를 hash 변환 하였습니다.
+    - `newUser` 새로운 유저를 생성합니다.
+    - await `savedUser` 데이터 베이스에 생성된 유저를 저장합니다.
+    - `payload`, `token`,`res.cookie` 회원가입 후 바로 토큰을 생성합니다.
+    - `userToReturn`유저를 생성해서 데이터 베이스에 저장하고 토큰을 생성하였습니다. 보안을 위해 새로운 유저를 반환할때 비밀번호를 지우고 반환합니다.
+
+2.  login POST async /apt/auth/login
+
+    - await `user` 몽구스의 findOne 메서드를 이용해 데이터 베이스에서 아이디를 찾아옵니다.
+    - await `passwordMatch` bcrypt의 compare 메서드를 이용해서 받아온 비밀번로 req.body.password와 user.password를 비교합니다.
+    - `payload`, `token`,`res.cookie` 회원가입 후 바로 토큰을 생성합니다.
+    - `userToReturn`유저를 생성해서 데이터 베이스에 저장하고 토큰을 생성하였습니다. 보안을 위해 새로운 유저를 반환할때 비밀번호를 지우고 데이터를 반환합니다.
+
+3.  middleware생성 permisstion.js
+
+    - `req.cookies["토큰이름"]` 쿠키를 조회합니다.
+    - `isAuthed` 권한이 있는지 없는지를 확인하는 불리언 변수입니다.
+    - `const { userId } = jwt.verify(token, process.env.JWT_SECRET)` jwt.verify를 이용해 토큰 유효성을 확인,조회합니다.
+      토큰 생성시 payload userId를 이용합니다.
+    - await `const user = await User.findById(userId);` findById를 이용해 데이터 베이스에 userId와 같은 \_id를 가진 데이터가 있는지 찾습니다. 있다면 `isAuthed = true` 없다면 `isAuthed = false;`를 반환합니다.
+    - `if(isAuthed){ return next()}`next() 메서드를 이용해 다음 작업으로 이어갑니다.
+
+4.  current GET /api/auth/current
+
+    - `middleware를 이용해 권한이 있는지 없는지를 반환합니다.
+
+5.  logout GET /api/auth/logout
+
+    - middleware를 이용해 권한이 있는지 없는지를 확인하고 `res.clearCookie("토큰 이름")` 메서드를 이용해 cookie를 지워줍니다.
+
+======================
+
+todos.js
+
+1.  POST async /api/todos/new
+
+    - `validateRegisterInput(req.body)` validation 모듈을 이용한 유효성 검사
+    - `newToDo` 새로운 todo를 생성합니다. user값은 middleware에서 토큰을 조회하고 토큰에 해당하는 회원을 조회한뒤 기존 \_id를 user에 할당해줍니다. 그리고 새로운 todo가 생성되면서 `_id`를 부여받습니다.
+
+2.  GET async /api/todos/current
+
+    - await `completeToDos` 데이터 베이스에서 find 메서드를 이용해 조건에 맞는 데이터를 찾습니다. `complete : true `는 나중에 완료된 todo를 구현할떄 사용합니다.
+    - await `incompleteToDos` 데이터 베이스에서 find 메서드를 이용해 조건에 맞는 데이터를 찾습니다. `complete : false `는 나중에 완료되지 않은 todo를 구현할떄 사용합니다.
+
+3.  PUT async /api/todos/:toDoId/complete
+
+    - todo 완료를 구현합니다.
+    - await `findOne`메서드를 이용해 `user`, `_id` 값과 일치하는 데이터를 조회합니다. 여기서 중요한점은 주소의`/:toDoId` 와 `_id: req.params.toDoId,` req.params.toDoId는 주소의 toDoId를 말합니다.
+    - await `updatedToDo` 몽구스의 findOneAndUpdate 메서드를 이용해 데이터 베이스의 데이터를 수정합니다. 첫번째 인자로는 어떤 도큐먼트를 찾을지를 정합니다. 두번째는 수정할 데이터 입니다. 마지막으로 3번째 인자는 `new: true`를 전달해야 업데이트 된 새 문서를 반환합니다.
+
+4.  PUT async /api/todos/:toDoId/incomplete
+
+    - 3.번화 같습니다.
+
+5.  PUT async /api/todos/:toDoId/
+
+    - content 내용을 업데이트 합니다.
+    - await `findOne` 메서드를 이용해 원하는 todo 데이터를 찾습니다.
+    - await `findOneAndUpdate` 메서드를 이용해 업데이트합니다. 3.번 참고!
+
+6.  PUT async /api/todos/:toDoId
+    - todo를 삭제합니다.
+    - await `fineOne` 메서드를 이용해 원하는 todo를 찾습니다.
+    - await `findOneAndRemove` 메서드를 이용해 데이터를 지웁니다.
