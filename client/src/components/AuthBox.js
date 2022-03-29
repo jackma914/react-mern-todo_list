@@ -15,6 +15,7 @@ function AuthBox({ register }) {
   const [errors, setErrors] = useState({});
 
   const onSubmit = (e) => {
+    console.log(errors);
     e.preventDefault();
     setLoading(true);
 
@@ -65,6 +66,8 @@ function AuthBox({ register }) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+
+              {errors.name && <p className="auth__error">{errors.name}</p>}
             </div>
           )}
 
@@ -75,6 +78,7 @@ function AuthBox({ register }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <p className="auth__error">{errors.email}</p>}
           </div>
           <div className="auth__field">
             <label>Password</label>
@@ -83,6 +87,9 @@ function AuthBox({ register }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && (
+              <p className="auth__error">{errors.password}</p>
+            )}
           </div>
 
           {register && (
@@ -93,14 +100,20 @@ function AuthBox({ register }) {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-
-              {/* <p className="auth__error">something went wrong</p> */}
+              {errors.confirmPassword && (
+                <p className="auth__error">{errors.confirmPassword}</p>
+              )}
             </div>
           )}
 
           <div className="auth__footer">
+            {/* 에러가 하나라도 있다면 문제가 있다는 에러를 구현합니다. */}
             {Object.keys(errors).length > 0 && (
-              <p className="auth__error">you have some </p>
+              <p className="auth__error">
+                {register
+                  ? "몇 가지 유효성 검사 오류가 있습니다."
+                  : errors.error}
+              </p>
             )}
 
             <button className="btn" type="submit" disabled={loading}>

@@ -99,6 +99,8 @@ export const GlobarProvider = (props) => {
 
   const value = {
     ...state,
+
+    //메서드를 넣어주어서 사용할수 있게설정합니다.
     getCurrentUser,
     logout,
   };
