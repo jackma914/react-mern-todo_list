@@ -126,3 +126,301 @@
           }
           ```
     ````
+
+6.  가장 중요한 context API와 reducer 입니다. 먼저 어떻게 사용될지를 알아보겠습니다. 데이터 베이스와 연결되어있는 서버를 구축하였습니다. 이제 서버에서 사용자 데이터와 투두 데이터를 받아와서 상태관리를 해야합니다.
+
+    - context api, reducer
+
+      ```js
+      import React, {
+        createContext,
+        useContext,
+        useReducer,
+        useEffect,
+      } from "react";
+      import axios from "axios";
+
+      // initial state 초기값
+      const initialState = {
+        user: null,
+        fetchingUser: true,
+        completeToDos: [],
+        incompleteToDos: [],
+      };
+
+      //context 생성
+      export const GlobalContext = createContext(initialState);
+
+      // reducer
+      const globalReducer = (state, action) => {
+        switch (action.type) {
+          case "SET_USER":
+            return {
+              ...state,
+              user: action.payload,
+              fetchingUser: false,
+            };
+          case "SET_COMPLETE_TODOS":
+            return {
+              ...state,
+              completeToDos: action.payload,
+            };
+          case "SET_INCOMPLETE_TODOS":
+            return {
+              ...state,
+              incompleteToDos: action.payload,
+            };
+
+          case "RESTE_USER":
+            return {
+              ...state,
+              user: null,
+              completeToDos: [],
+              incompleteToDos: [],
+              fetchingUser: false,
+            };
+          default:
+            return state;
+        }
+      };
+
+      //provider 컴포넌트
+      export const GlobarProvider = (props) => {
+        //useReducer
+        const [state, dispatch] = useReducer(globalReducer, initialState);
+
+        useEffect(() => {
+          getCurrentUser();
+        }, []);
+
+        //axios를 통해 서버와 통신합니다.
+        const getCurrentUser = async () => {
+          try {
+            //로그인된 사용자가 있는지를 확인합니다.
+            const res = await axios.get("/api/auth/current");
+
+            if (res.data) {
+              //있다면 todos를 받아옵니다.
+              const toDosRes = await axios.get("/api/todos/current");
+
+              if (toDosRes.data) {
+                //받아온 사용자와 todos를 dispatch를 통해 데이터를 보내줍니다.
+                dispatch({ type: "SET_USER", payload: res.data });
+                dispatch({
+                  type: "SET_COMPLETE_TODOS",
+                  payload: toDosRes.data.complete,
+                });
+                dispatch({
+                  type: "SET_INCOMPLETE_TODOS",
+                  payload: toDosRes.data.incomplete,
+                });
+              }
+            } else {
+              dispatch({ type: "RESET_USER" });
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        };
+
+        // logout 통신
+        const logout = async () => {
+          try {
+            await axios.put("apu/auth/logout");
+
+            dispatch({ type: "RESET_USER" });
+          } catch (err) {
+            console.log(err);
+            dispatch({ type: "RESET_USER" });
+          }
+        };
+
+        const value = {
+          ...state,
+          getCurrentUser,
+          logout,
+        };
+
+        return (
+          <GlobalContext.Provider value={value}>
+            {props.children}
+          </GlobalContext.Provider>
+        );
+      };
+
+      export function useGlobalContext() {
+        return useContext(GlobalContext);
+      }
+      ```
+
+7.  useLocation() 메서드와 useGlobalContext()를 이용해 header의 logout, login, register 버튼을 구현합니다.
+
+    ```js
+    function Header() {
+      const { user } = useGlobalContext();
+      const { pathname } = useLocation();
+
+      return (
+        <div className="main-header">
+          <div className="main-header__inner">
+            <div className="main-header__left">
+              <Link to="/">Todos </Link>
+            </div>
+
+            <div className="main-header__right">
+              //user 가 true라면 버튼은 logout입니다.
+              {user ? (
+                <button className="btn">Logout</button>
+              ) : // user가 false라면 에서 2가지로 나뉩니다.
+              // 현재 주소가 "/" 라면 register 그게 아니라면 login 으로 버튼이 변경됩니다.
+
+              pathname === "/" ? (
+                <Link to="/register" className="btn">
+                  Register
+                </Link>
+              ) : (
+                <Link to="/" className="btn">
+                  Login
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ```
+
+8.  회원가입 / 로그인 authbox 컴포넌트를 서버와 연결합니다. useState() 메서드를이용해 input에 입력된 데이터를 sumbit() 메서드를 만들어서 axios를 통해 서버에 input 데이터를 넘겨줍니다. 응답반은 데이터는 getCurrentUser() contextAPI 메서드로 전달되고 서버에서 만들었던 validation 유효성 검사 에러도 받습니다. 중요한 파트입니다.
+
+    ```js
+    import React, { useState } from "react";
+    import { Link } from "react-router-dom";
+    import axios from "axios";
+    import { useGlobalContext } from "../context/GlobalContext";
+
+    function AuthBox({ register }) {
+      const { getCurrentUser } = useGlobalContext();
+
+      // input 데이터를 입력된 데이터를  저장합니다.
+      const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+      const [name, setName] = useState("");
+      const [confirmPassword, setConfirmPassword] = useState("");
+      const [loading, setLoading] = useState(false);
+      const [errors, setErrors] = useState({});
+
+      // register 혹은 login 폼이 submit 될때 실행될 메서드입니다. useState으로 담겨진 데이터를  axios를 이용해 서버에 보내집니다.
+      const onSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        let data = {};
+        if (register) {
+          data = {
+            email,
+            name,
+            password,
+            confirmPassword,
+          };
+        } else {
+          data = {
+            email,
+            password,
+          };
+        }
+
+        // 서버와 통신합니다.
+        axios
+          .post(register ? "/api/auth/register" : "/api/auth/login", data)
+          .then(() => {
+            // context를 호출합니다.
+            getCurrentUser();
+          })
+          .catch((err) => {
+            setLoading(false);
+            if (err?.response?.data) {
+              setErrors(err.response.data);
+            }
+          });
+      };
+
+      return (
+        <div className="auth">
+          <div className="auth__box">
+            <div className="auth__header">
+              <h1>{register ? "Register" : "Login"}</h1>
+            </div>
+
+            <form onSubmit={onSubmit}>
+              {register && (
+                <div className="auth__field">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+              )}
+
+              <div className="auth__field">
+                <label>Email</label>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="auth__field">
+                <label>Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+
+              {register && (
+                <div className="auth__field">
+                  <label>Confirm Password</label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+
+                  {/* <p className="auth__error">something went wrong</p> */}
+                </div>
+              )}
+
+              <div className="auth__footer">
+                {Object.keys(errors).length > 0 && (
+                  <p className="auth__error">you have some </p>
+                )}
+
+                <button className="btn" type="submit" disabled={loading}>
+                  {register ? "Register" : "Login"}
+                </button>
+
+                {!register ? (
+                  <div className="auth__register">
+                    <p>
+                      회원이 아닌가요? <Link to="/register">회원가입</Link>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="auth__register">
+                    <p>
+                      이미 회원 이신가요? <Link to="/register">로그인</Link>
+                    </p>
+                  </div>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    export default AuthBox;
+    ```

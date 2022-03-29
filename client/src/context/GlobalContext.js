@@ -32,7 +32,7 @@ const globalReducer = (state, action) => {
         incompleteToDos: action.payload,
       };
 
-    case "RESTE_USER":
+    case "RESET_USER":
       return {
         ...state,
         user: null,
@@ -81,6 +81,7 @@ export const GlobarProvider = (props) => {
       }
     } catch (err) {
       console.log(err);
+      dispatch({ type: "RESET_USER" });
     }
   };
 

@@ -73,6 +73,12 @@ textarea {
   color: $white;
   border-radius: 5px;
   font-size: 1rem;
+  text-decoration: none;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   // 트랜지션 애니메이션
   transition: all 0.2s ease;
@@ -118,6 +124,7 @@ textarea {
       border: none;
       border-radius: 5px;
       color: $white;
+      font-size: 1.25rem;
 
       //input 필드를 클릭했을떄 생기는 선을 지웁니다.
       &:focus {
@@ -142,6 +149,26 @@ textarea {
     font-size: 1rem;
     margin-top: 10px;
     color: $red;
+  }
+
+  &__register {
+    text-align: center;
+    margin-top: 20px;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: $white;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
 }
 

@@ -20,7 +20,6 @@ router.get("/test", (req, res) => {
 //@access Public
 router.post("/register", async (req, res) => {
   try {
-    console.log(req.body);
     // 받아오는 데이터를 validation 모듈에 넣어줍니다.
     const { errors, isValid } = validateRegisterInput(req.body);
     //isValid가 false이면 무언가가 양식에 어긋나서 error를 반환했다는 의미입니다. errors를 return 해줍니다.

@@ -6,7 +6,7 @@ import { useGlobalContext } from "../context/GlobalContext";
 
 function Layout() {
   const { fetchingUser } = useGlobalContext();
-  return !fetchingUser ? (
+  return fetchingUser ? (
     <div className="loading">
       <h1>Loading</h1>
     </div>
