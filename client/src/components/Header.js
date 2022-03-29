@@ -6,7 +6,7 @@ function Header() {
     <div className="main-header">
       <div className="main-header__inner">
         <div className="main-header__left">
-          <Link to="/"> ToDo List</Link>
+          <Link to="/">Todos </Link>
         </div>
 
         <div className="main-header__right">

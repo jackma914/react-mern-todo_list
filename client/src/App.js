@@ -1,8 +1,13 @@
 import "./main.scss";
 import Layout from "./components/Layout";
+import { GlobarProvider } from "./context/GlobalContext";
 
 function App() {
-  return <Layout />;
+  return (
+    <GlobarProvider>
+      <Layout />
+    </GlobarProvider>
+  );
 }
 
 export default App;
