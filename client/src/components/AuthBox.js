@@ -15,7 +15,6 @@ function AuthBox({ register }) {
   const [errors, setErrors] = useState({});
 
   const onSubmit = (e) => {
-    console.log(errors);
     e.preventDefault();
     setLoading(true);
 
@@ -45,6 +44,7 @@ function AuthBox({ register }) {
       .catch((err) => {
         setLoading(false);
         if (err?.response?.data) {
+          //받아온 에러 데이터를 저장합니다.
           setErrors(err.response.data);
         }
       });
@@ -107,7 +107,6 @@ function AuthBox({ register }) {
           )}
 
           <div className="auth__footer">
-            {/* 에러가 하나라도 있다면 문제가 있다는 에러를 구현합니다. */}
             {Object.keys(errors).length > 0 && (
               <p className="auth__error">
                 {register
@@ -129,7 +128,7 @@ function AuthBox({ register }) {
             ) : (
               <div className="auth__register">
                 <p>
-                  이미 회원 이신가요? <Link to="/register">로그인</Link>
+                  이미 회원 이신가요? <Link to="/">로그인</Link>
                 </p>
               </div>
             )}

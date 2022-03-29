@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import AuthBox from "./AuthBox";
 import { useGlobalContext } from "../context/GlobalContext";
+import Dashboard from "./Dashboard";
 
 function Layout() {
   const { fetchingUser } = useGlobalContext();
@@ -17,6 +18,7 @@ function Layout() {
       <Routes>
         <Route path="/" element={<AuthBox />} />
         <Route path="/register/*" element={<AuthBox register />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

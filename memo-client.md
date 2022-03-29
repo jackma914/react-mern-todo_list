@@ -424,3 +424,138 @@
 
     export default AuthBox;
     ```
+
+9.  context API에 logout 메서드를 구현합니다.
+
+    ```js
+    // logout 통신
+    const logout = async () => {
+      try {
+        await axios.put("apu/auth/logout");
+
+        dispatch({ type: "RESET_USER" });
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: "RESET_USER" });
+      }
+    };
+
+    const value = {
+      ...state,
+
+      //메서드를 넣어주어서 사용할수 있게설정합니다.
+      getCurrentUser,
+      logout,
+    };
+    ```
+
+10. AuthBox 컴포넌트에서 서버에 데이터를 보내고 유효성 검사를 합니다. 받아온 에러를 useState을 이용해 저장한뒤 html에 렌더링합니다.
+
+    ```js
+          //서버에 data를 전송합니다. 인자로는 data를 넣어줍니다.
+      axios
+        .post(register ? "/api/auth/register" : "/api/auth/login", data)
+        .then(() => {
+          // context를 호출합니다.
+          getCurrentUser();
+        })
+        .catch((err) => {
+          setLoading(false);
+          if (err?.response?.data) {
+
+            //받아온 에러 데이터를 저장합니다.
+            setErrors(err.response.data);
+          }
+        });
+      };
+
+      return (
+        <div className="auth">
+          <div className="auth__box">
+            <div className="auth__header">
+              <h1>{register ? "Register" : "Login"}</h1>
+            </div>
+
+            <form onSubmit={onSubmit}>
+              {register && (
+                <div className="auth__field">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+
+                  {errors.name && <p className="auth__error">{errors.name}</p>}
+                </div>
+              )}
+
+              <div className="auth__field">
+                <label>Email</label>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {errors.email && <p className="auth__error">{errors.email}</p>}
+              </div>
+              <div className="auth__field">
+                <label>Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {errors.password && (
+                  <p className="auth__error">{errors.password}</p>
+                )}
+              </div>
+
+              {register && (
+                <div className="auth__field">
+                  <label>Confirm Password</label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  {errors.confirmPassword && (
+                    <p className="auth__error">{errors.confirmPassword}</p>
+                  )}
+                </div>
+              )}
+
+              <div className="auth__footer">
+                {Object.keys(errors).length > 0 && (
+                  <p className="auth__error">
+                    {register
+                      ? "몇 가지 유효성 검사 오류가 있습니다."
+                      : errors.error}
+                  </p>
+                )}
+
+                <button className="btn" type="submit" disabled={loading}>
+                  {register ? "Register" : "Login"}
+                </button>
+
+                {!register ? (
+                  <div className="auth__register">
+                    <p>
+                      회원이 아닌가요? <Link to="/register">회원가입</Link>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="auth__register">
+                    <p>
+                      이미 회원 이신가요? <Link to="/register">로그인</Link>
+                    </p>
+                  </div>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    ```
