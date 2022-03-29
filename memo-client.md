@@ -559,3 +559,39 @@
     }
 
     ```
+
+11. useNavigate()메서드를 이용해 logout를 실행시 자동으로 "/" 화면 login 으로 넘어가게 합니다.
+
+    ```js
+    import React, { useEffect } from "react";
+    import { useGlobalContext } from "../context/GlobalContext";
+    import { useNavigate } from "react-router-dom";
+
+    function Dashboard() {
+      const { user } = useGlobalContext();
+      const navigate = useNavigate();
+
+      useEffect(() => {
+        if (!user && navigate) {
+          // user가 없다면 "/" 화면으로 갑니다. 다시 dashboard로 오려해도 올수 없습니다.
+          navigate("/");
+        }
+      }, [user, navigate]);
+      return <div>Dashboard</div>;
+    }
+
+    export default Dashboard;
+    ```
+
+12. 반대로 로그인 했을때 dashboard 페이지로 이동하게 구현합니다. 로그인이 있는 AuthBox 컴포넌트에서 구현합니다.
+
+    ```js
+    const { getCurrentUser, user } = useGlobalContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (user && navigate) {
+        navigate("/dashboard");
+      }
+    }, [user, navigate]);
+    ```

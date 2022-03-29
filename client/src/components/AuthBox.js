@@ -1,18 +1,25 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useGlobalContext } from "../context/GlobalContext";
 
 function AuthBox({ register }) {
-  const { getCurrentUser } = useGlobalContext();
-
+  const { getCurrentUser, user } = useGlobalContext();
+  const navigate = useNavigate();
   // useState을 이용해  회원가입, 로그인 폼의 데이터를 저장합니다.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (user && navigate) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const onSubmit = (e) => {
     e.preventDefault();
