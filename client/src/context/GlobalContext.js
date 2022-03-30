@@ -103,10 +103,12 @@ export const GlobarProvider = (props) => {
     });
   };
 
-  // todo complete, incomplete
+  // incomplete 를 complete로 변환합니다.
   const toDoComplete = (toDo) => {
     dispatch({
       type: "SET_INCOMPLETE_TODOS",
+
+      // 기존 incompleteToDos에서 toDo._id를 빼고 받환합니다.
       payload: state.incompleteToDos.filter(
         (incompleteToDo) => incompleteToDo._id !== toDo._id
       ),
@@ -118,6 +120,27 @@ export const GlobarProvider = (props) => {
     });
   };
 
+  // complete로 를 incomplete로 변환합니다.
+  const toDoIncomplete = (toDo) => {
+    dispatch({
+      type: "SET_COMPLETE_TODOS",
+      payload: state.completeToDos.filter(
+        (complete) => complete._id !== toDo._id
+      ),
+    });
+
+    const newIncompleteToDos = [toDo, ...state.incompleteToDos];
+
+    dispatch({
+      type: "SET_INCOMPLETE_TODOS",
+
+      //다시 incomplete로 돌아갈때는 만들어졌던 시간순으로 정렬해서 돌아갑니다.
+      payload: newIncompleteToDos.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.creatdAt)
+      ),
+    });
+  };
+
   const value = {
     ...state,
 
@@ -126,6 +149,7 @@ export const GlobarProvider = (props) => {
     logout,
     addToDo,
     toDoComplete,
+    toDoIncomplete,
   };
 
   return (

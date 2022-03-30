@@ -10,7 +10,7 @@ function ToDoCard({ toDo }) {
   const [editing, setEditing] = useState(false);
   const input = useRef(null);
 
-  const { toDoComplete } = useGlobalContext();
+  const { toDoComplete, toDoIncomplete } = useGlobalContext();
 
   // onEidit 메서드를 클릭하면 editing state이 true로 바귀고 readOnly를 수정가능하게 합니다.
   const onEdit = (e) => {
@@ -42,7 +42,7 @@ function ToDoCard({ toDo }) {
   const markAsIncomplte = (e) => {
     e.preventDefault();
     axios.put(`/api/todos/${toDo._id}/incomplete`).then((res) => {
-      // toDoIncomplete(res.data);
+      toDoIncomplete(res.data);
     });
   };
 

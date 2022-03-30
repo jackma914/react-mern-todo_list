@@ -786,4 +786,58 @@
       };
       ```
 
-15.
+15. 이번에는 체크박스를 클릭해 완료한 todo를 complete으로 보내도록 구현합니다. 우선 체크박스에 메서드를 구현합니다. ` onChange={!toDo.complete ? markAsComplte : markAsIncomplte}` 보시는것과같이 체크박스가 complete인지 incomplete인지를 구별한뒤 메서드를 상황에 맞게 실행됩니다. 메서드를 이용해 서버와 통신합니다.
+
+    ```js
+    const markAsComplte = (e) => {
+      e.preventDefault();
+
+      // complete 서버에서 데이터를 받아옵니다.
+      axios.put(`/api/todos/${toDo._id}/complete`).then((res) => {
+        //globalcontext에  만들어진 메서드에 데이터를 보내줍니다..
+        toDoComplete(res.data);
+      });
+    };
+    ```
+
+    globalcontext의 디스페치입니다.
+
+    ```js
+    const toDoComplete = (toDo) => {
+      dispatch({
+        type: "SET_INCOMPLETE_TODOS",
+
+        // filter 메서드를 이용해 기존 incompleteToDos에서 toDo._id를 빼고 받환합니다.
+        payload: state.incompleteToDos.filter(
+          (incompleteToDo) => incompleteToDo._id !== toDo._id
+        ),
+      });
+
+      dispatch({
+        type: "SET_COMPLETE_TODOS",
+        // complete부분에는 추가된 toDo와 기존에 있던 complete 정보가 들어갑니다.
+        payload: [toDo, ...state.completeToDos],
+      });
+    };
+
+    // complete로 를 incomplete로 변환합니다.
+    const toDoIncomplete = (toDo) => {
+      dispatch({
+        type: "SET_COMPLETE_TODOS",
+        payload: state.completeToDos.filter(
+          (complete) => complete._id !== toDo._id
+        ),
+      });
+
+      const newIncompleteToDos = [toDo, ...state.incompleteToDos];
+
+      dispatch({
+        type: "SET_INCOMPLETE_TODOS",
+
+        //다시 incomplete로 돌아갈때는 만들어졌던 시간순으로 정렬해서 돌아갑니다.
+        payload: newIncompleteToDos.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.creatdAt)
+        ),
+      });
+    };
+    ```
