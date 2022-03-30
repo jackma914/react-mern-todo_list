@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useGlobalContext } from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import ToDoCard from "./ToDoCard";
+import NewToDo from "./NewToDo";
 
 function Dashboard() {
   const { user, completeToDos, incompleteToDos } = useGlobalContext();
@@ -16,6 +17,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
+      <NewToDo />
       <div className="todos">
         {/* 유저가 확인 되었다면 todo를 화면에 출력합니다. */}
         {incompleteToDos.map((toDo) => (

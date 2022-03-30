@@ -715,3 +715,73 @@
 
     export default ToDoCard;
     ```
+
+14. 새로운 todo를 생성합니다. NewToDo 컴포넌트를 생성합니다.
+
+    - 먼저 NewToDo 컴포넌트에서 input과 butten을 생성합니다.
+      useState을 이용해 input 필드에 데이터를 저장합니다.
+      저장한 데이터는 onSubmit 메서드를 생성해 axios 서버에 데이터를 보냅니다. 보냄과동시에 setContent는 초기화 ("")를 시켜줍니다.
+
+      ```js
+      import React, { useState } from "react";
+      import axios from "axios";
+      import { useGlobalContext } from "../context/GlobalContext";
+
+      function NewToDo() {
+        const { addToDo } = useGlobalContext();
+        const [content, setContent] = useState("");
+
+        // 서버에 새로운 todo content를 보냅니다.
+        const onSubmit = (e) => {
+          e.preventDefault();
+
+          axios.post("api/todos/new", { content }).then((res) => {
+            setContent("");
+            addToDo(res.data);
+          });
+        };
+        return (
+          <form className="new" onSubmit={onSubmit}>
+            <input
+              type="text"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+
+            {/* disabled를 이용해 한글자도 없다면  비활성화 됩니다.*/}
+            <button
+              className="btn"
+              type="submit"
+              disabled={content.length == 0}
+            >
+              Add
+            </button>
+          </form>
+        );
+      }
+
+      export default NewToDo;
+      ```
+
+      - 중요한 부분입니다. `const { addToDo } = useGlobalContext();` GlobalContext 컴포넌트에 addToDo 디스패치를 만들어 주었습니다. 서버와 통신할때 받은 데이터를 `addToDo(res.data)`로 디스페치에 데이터를 전송합니다.
+
+      ```js
+      // GlobalContext.js
+      const addToDo = (toDo) => {
+        dispatch({
+          type: "SET_INCOMPLETE_TODOS",
+          payload: [toDo, ...state.incompleteToDos],
+        });
+      };
+      ```
+
+      ```js
+      const onSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post("api/todos/new", { content }).then((res) => {
+          setContent("");
+          addToDo(res.data);
+        });
+      };
+      ```

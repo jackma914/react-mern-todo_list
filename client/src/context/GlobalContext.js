@@ -97,12 +97,20 @@ export const GlobarProvider = (props) => {
     }
   };
 
+  const addToDo = (toDo) => {
+    dispatch({
+      type: "SET_INCOMPLETE_TODOS",
+      payload: [toDo, ...state.incompleteToDos],
+    });
+  };
+
   const value = {
     ...state,
 
     //메서드를 넣어주어서 사용할수 있게설정합니다.
     getCurrentUser,
     logout,
+    addToDo,
   };
 
   return (
