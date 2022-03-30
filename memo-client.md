@@ -841,3 +841,92 @@
       });
     };
     ```
+
+16. 데이터 삭제와 수정을 구현합니다. 먼저 삭제입니다. delete버튼에 onclick으로 메서드를 핸들링합니다. 서버통신하여 서버에서 데이터를 지웁니다.
+
+    ```js
+    //삭제 메서드입니다.
+    const deleteToDo = (e) => {
+      e.preventDefault();
+
+      // 윈도우 메시지에서 예 라는 답이나오면 실행합니다.
+      if (window.confirm("정말 삭제 하시겠습니까?")) {
+        axios.delete(`/api/todos/${toDo._id}`).then(() => {
+          // 데이터는 서버에서 삭제를 이미 했습니다. res 로 데이터를 받지 않고 toDo를 전달합니다.
+          removeToDo(toDo);
+        });
+      }
+    };
+    ```
+
+    globercontext입니다.
+
+    ```js
+    // todo 삭제
+    const removeToDo = (toDo) => {
+      if (toDo.complete) {
+        dispatch({
+          type: "SET_COMPLETE_TODOS",
+
+          //filter 메서드를 이용해 toDo._id를 제외시킵니다.
+          payload: state.completeToDos.filter(
+            (completeToDo) => completeToDo._id !== toDo._id
+          ),
+        });
+      } else {
+        dispatch({
+          type: "SET_INCOMPLETE_TODOS",
+          //filter 메서드를 이용해 toDo._id를 제외시킵니다.
+          payload: state.incompleteToDos.filter(
+            (incompleteToDo) => incompleteToDo._id !== toDo._id
+          ),
+        });
+      }
+    };
+    ```
+
+17. 업데이트를 구현합니다. 서버로 바뀐 content를 보내줍니다. 반환된 데이터를 context로 보내주고 setEditing은 false로 다시 edit, delete 버튼으로 돌아옵니다.
+
+    ```js
+    const updateToDo = (e) => {
+      e.preventDefault();
+
+      axios
+        .put(`/api/todos/${toDo._id}`, { content })
+        .then((res) => {
+          editToDo(res.data);
+          setEditing(false);
+        })
+        .catch(() => {
+          stopEditing();
+        });
+    };
+    ```
+
+    toDo로 받아온 업데이트된 네용을 map메서드를 이용합니다. `completeToDo._id !== toDo.id` 같지 안다면 기존의 completeToDo 데이터로, 즉 수정된 데이터 말고는 원래 데이터로 반환하게 구현됩니다. \_id가 같다면 toDo 새로운 데이터를 넣어 반환합니다.
+
+    ```js
+    //todo 업데이트
+    const editToDo = (toDo) => {
+      if (toDo.complete) {
+        const newCompleteToDos = state.completeToDos.map((completeToDo) =>
+          completeToDo._id !== toDo.id ? completeToDo : toDo
+        );
+        dispatch({
+          type: "SET_COMPLETE_TODOS",
+          payload: newCompleteToDos,
+        });
+      } else {
+        // 만약 toDo의 데이터의 id가 기존 incompleteToDo의 id와 같지 안다면 기존 데이터 같다면 새로 들어온 toDo데이터를 보내줍니다.
+        // 수정한 데이터 말고 다른 데이터들은 수정되지 않았기때문에 기존데이터로 보내고 수정된 데이터면 골라내야 하기 때문입니다.
+        const newInompleteToDos = state.incompleteToDos.map((incompleteToDo) =>
+          incompleteToDo._id !== toDo._id ? incompleteToDo : toDo
+        );
+        console.log(newInompleteToDos);
+        dispatch({
+          type: "SET_INCOMPLETE_TODOS",
+          payload: newInompleteToDos,
+        });
+      }
+    };
+    ```

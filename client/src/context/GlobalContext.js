@@ -141,6 +141,53 @@ export const GlobarProvider = (props) => {
     });
   };
 
+  // todo 삭제
+  const removeToDo = (toDo) => {
+    if (toDo.complete) {
+      console.log(toDo);
+      dispatch({
+        type: "SET_COMPLETE_TODOS",
+
+        //filter 메서드를 이용해 toDo._id를 제외시키고 보냅니다.
+        payload: state.completeToDos.filter(
+          (completeToDo) => completeToDo._id !== toDo._id
+        ),
+      });
+    } else {
+      dispatch({
+        type: "SET_INCOMPLETE_TODOS",
+        payload: state.incompleteToDos.filter(
+          (incompleteToDo) => incompleteToDo._id !== toDo._id
+        ),
+      });
+    }
+  };
+
+  //todo 업데이트
+  const editToDo = (toDo) => {
+    console.log(toDo);
+    if (toDo.complete) {
+      const newCompleteToDos = state.completeToDos.map((completeToDo) =>
+        completeToDo._id !== toDo.id ? completeToDo : toDo
+      );
+      dispatch({
+        type: "SET_COMPLETE_TODOS",
+        payload: newCompleteToDos,
+      });
+    } else {
+      // 만약 toDo의 데이터의 id가 기존 incompleteToDo의 id와 같지 안다면 기존 데이터 같다면 새로 들어온 toDo데이터를 보내줍니다.
+      // 수정한 데이터 말고 다른 데이터들은 수정되지 않았기때문에 기존데이터로 보내고 수정된 데이터면 골라내야 하기 때문입니다.
+      const newInompleteToDos = state.incompleteToDos.map((incompleteToDo) =>
+        incompleteToDo._id !== toDo._id ? incompleteToDo : toDo
+      );
+      console.log(newInompleteToDos);
+      dispatch({
+        type: "SET_INCOMPLETE_TODOS",
+        payload: newInompleteToDos,
+      });
+    }
+  };
+
   const value = {
     ...state,
 
@@ -150,6 +197,8 @@ export const GlobarProvider = (props) => {
     addToDo,
     toDoComplete,
     toDoIncomplete,
+    removeToDo,
+    editToDo,
   };
 
   return (

@@ -10,7 +10,8 @@ function ToDoCard({ toDo }) {
   const [editing, setEditing] = useState(false);
   const input = useRef(null);
 
-  const { toDoComplete, toDoIncomplete } = useGlobalContext();
+  const { toDoComplete, toDoIncomplete, removeToDo, editToDo } =
+    useGlobalContext();
 
   // onEidit 메서드를 클릭하면 editing state이 true로 바귀고 readOnly를 수정가능하게 합니다.
   const onEdit = (e) => {
@@ -31,6 +32,7 @@ function ToDoCard({ toDo }) {
     setContent(toDo.content);
   };
 
+  // 체크박스 마커 메서드 입니다.
   const markAsComplte = (e) => {
     e.preventDefault();
 
@@ -44,6 +46,34 @@ function ToDoCard({ toDo }) {
     axios.put(`/api/todos/${toDo._id}/incomplete`).then((res) => {
       toDoIncomplete(res.data);
     });
+  };
+
+  //삭제 메서드입니다.
+  const deleteToDo = (e) => {
+    e.preventDefault();
+
+    if (window.confirm("정말 삭제 하시겠습니까?")) {
+      axios.delete(`/api/todos/${toDo._id}`).then(() => {
+        // 데이터는 서버에서 삭제를 이미 했습니다. res 로 데이터를 받지 않고 toDo를 전달합니다.
+        removeToDo(toDo);
+      });
+    }
+  };
+
+  //데이터를 업데이트합니다.
+
+  const updateToDo = (e) => {
+    e.preventDefault();
+
+    axios
+      .put(`/api/todos/${toDo._id}`, { content })
+      .then((res) => {
+        editToDo(res.data);
+        setEditing(false);
+      })
+      .catch(() => {
+        stopEditing();
+      });
   };
 
   return (
@@ -71,12 +101,12 @@ function ToDoCard({ toDo }) {
           <>
             {/* complete이면 edit 버튼을 구현하지 않습니다. incomplete에만 구현됩니다. */}
             {!toDo.complete && <button onClick={onEdit}>Edit</button>}
-            <button>Delete</button>
+            <button onClick={deleteToDo}>Delete</button>
           </>
         ) : (
           <>
             <button onClick={stopEditing}>Cancel</button>
-            <button>Save</button>
+            <button onClick={updateToDo}>Save</button>
           </>
         )}
       </div>
