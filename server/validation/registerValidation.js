@@ -17,8 +17,8 @@ const validateRegisterInput = (data) => {
   if (isEmpty(data.password)) {
     errors.password = "비밀번호는 비워둘수 없습니다.";
     //Validator의 isLength 메서드를 이용해 password의 옵션인 6~150자 사이 인지를 검사합니다.
-  } else if (!Validator.isLength(data.password, { min: 6, max: 150 })) {
-    errors.password = "비밀번호는 6~150자 사이어야 합니다. ";
+  } else if (!Validator.isLength(data.password, { min: 8, max: 16 })) {
+    errors.password = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요. ";
   }
 
   // 이름 필드 검사
@@ -26,7 +26,7 @@ const validateRegisterInput = (data) => {
     errors.name = "이름은 비워둘수 없습니다.";
     //Validator의 isLength 메서드를 이용해 password의 옵션인 6~150자 사이 인지를 검사합니다.
   } else if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-    errors.name = "이름은 2~30자 사이어야 합니다. ";
+    errors.name = "이름은 2~30자 입력 가능합니다.";
   }
 
   //비밀번호 확인 필드 검사
@@ -34,7 +34,7 @@ const validateRegisterInput = (data) => {
     errors.confirmPassword = "비밀번호 확인 필드는 비워둘수 없습니다.";
     //Validator의 equals 메서드를 이용해 password와 비교합니다.
   } else if (!Validator.equals(data.password, data.confirmPassword)) {
-    errors.confirmPassword = "비밀번호와 일치하지 않습니다. ";
+    errors.confirmPassword = "비밀번호가 일치하지 않습니다. ";
   }
 
   return {

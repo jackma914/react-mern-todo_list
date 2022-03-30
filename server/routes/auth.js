@@ -34,9 +34,7 @@ router.post("/register", async (req, res) => {
     });
 
     if (existingEmail) {
-      return res
-        .status(400)
-        .json({ err: "이 이메일을 가진 사용자가 이미 있습니다" });
+      return res.status(400).json({ err: "이미 사용중이거나 아이디입니다." });
     }
 
     //비밀번호 hash
@@ -88,7 +86,9 @@ router.post("/login", async (req, res) => {
       email: new RegExp("^" + req.body.email + "$", "i"),
     });
     if (!user) {
-      return res.status(400).json({ error: "아이디를 확인해 주세요." });
+      return res.status(400).json({
+        error: "아이디를 잘못 입력했습니다.",
+      });
     }
 
     // 비밀번호를 확인합니다.
@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
       user.password
     );
     if (!passwordMatch) {
-      return res.status(400).json({ error: "비밀번호를 확인해 주세요." });
+      return res.status(400).json({ error: "비밀번호를 잘못 입력했습니다." });
     }
     //jwt 토큰 생성
     const payload = { userId: user._id };

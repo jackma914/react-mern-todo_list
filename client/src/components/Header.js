@@ -10,21 +10,21 @@ function Header() {
     <div className="main-header">
       <div className="main-header__inner">
         <div className="main-header__left">
-          <Link to="/">Todos </Link>
+          <Link to="/">Doit</Link>
         </div>
 
         <div className="main-header__right">
           {user ? (
             <button className="btn" onClick={logout}>
-              Logout
+              로그아웃
             </button>
           ) : pathname === "/" ? (
             <Link to="/register" className="btn">
-              Register
+              회원가입
             </Link>
           ) : (
             <Link to="/" className="btn">
-              Login
+              로그인
             </Link>
           )}
         </div>

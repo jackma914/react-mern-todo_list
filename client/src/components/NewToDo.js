@@ -24,8 +24,8 @@ function NewToDo() {
       />
 
       {/* disabled를 이용해 한글자도 없다면  비활성화 됩니다.*/}
-      <button className="btn" type="submit" disabled={content.length == 0}>
-        Add
+      <button className="btn add" type="submit" disabled={content.length == 0}>
+        추가
       </button>
     </form>
   );

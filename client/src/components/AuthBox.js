@@ -61,13 +61,13 @@ function AuthBox({ register }) {
     <div className="auth">
       <div className="auth__box">
         <div className="auth__header">
-          <h1>{register ? "Register" : "Login"}</h1>
+          <h1>{register ? "회원가입" : "로그인"}</h1>
         </div>
 
         <form onSubmit={onSubmit}>
           {register && (
             <div className="auth__field">
-              <label>Name</label>
+              <label>이름</label>
               <input
                 type="text"
                 value={name}
@@ -79,7 +79,7 @@ function AuthBox({ register }) {
           )}
 
           <div className="auth__field">
-            <label>Email</label>
+            <label>이메일</label>
             <input
               type="text"
               value={email}
@@ -88,7 +88,7 @@ function AuthBox({ register }) {
             {errors.email && <p className="auth__error">{errors.email}</p>}
           </div>
           <div className="auth__field">
-            <label>Password</label>
+            <label>비밀번호</label>
             <input
               type="password"
               value={password}
@@ -101,7 +101,7 @@ function AuthBox({ register }) {
 
           {register && (
             <div className="auth__field">
-              <label>Confirm Password</label>
+              <label>비밀번호 재확인</label>
               <input
                 type="password"
                 value={confirmPassword}
@@ -123,7 +123,7 @@ function AuthBox({ register }) {
             )}
 
             <button className="btn" type="submit" disabled={loading}>
-              {register ? "Register" : "Login"}
+              {register ? "회원가입" : "로그인"}
             </button>
 
             {!register ? (

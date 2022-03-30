@@ -100,13 +100,13 @@ function ToDoCard({ toDo }) {
         {!editing ? (
           <>
             {/* complete이면 edit 버튼을 구현하지 않습니다. incomplete에만 구현됩니다. */}
-            {!toDo.complete && <button onClick={onEdit}>Edit</button>}
-            <button onClick={deleteToDo}>Delete</button>
+            {!toDo.complete && <button onClick={onEdit}>수정</button>}
+            <button onClick={deleteToDo}>삭제</button>
           </>
         ) : (
           <>
-            <button onClick={stopEditing}>Cancel</button>
-            <button onClick={updateToDo}>Save</button>
+            <button onClick={stopEditing}>취소</button>
+            <button onClick={updateToDo}>저장</button>
           </>
         )}
       </div>
