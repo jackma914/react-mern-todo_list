@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState, useRef } from "react";
+import { useGlobalContext } from "../context/GlobalContext";
 
 function ToDoCard({ toDo }) {
   // 데이터를 저장하는 state입니다.
@@ -7,6 +9,8 @@ function ToDoCard({ toDo }) {
   //edit 컨트롤
   const [editing, setEditing] = useState(false);
   const input = useRef(null);
+
+  const { toDoComplete } = useGlobalContext();
 
   // onEidit 메서드를 클릭하면 editing state이 true로 바귀고 readOnly를 수정가능하게 합니다.
   const onEdit = (e) => {
@@ -27,10 +31,30 @@ function ToDoCard({ toDo }) {
     setContent(toDo.content);
   };
 
+  const markAsComplte = (e) => {
+    e.preventDefault();
+
+    axios.put(`/api/todos/${toDo._id}/complete`).then((res) => {
+      toDoComplete(res.data);
+    });
+  };
+
+  const markAsIncomplte = (e) => {
+    e.preventDefault();
+    axios.put(`/api/todos/${toDo._id}/incomplete`).then((res) => {
+      // toDoIncomplete(res.data);
+    });
+  };
+
   return (
     // todo가 complete 데이터이면 완료했다는 의미의 text 가운데 줄이 그어지는 css를 구현합니다.
     <div className={`todo ${toDo.complete ? "todo--complete" : ""}`}>
-      <input type="checkbox" />
+      {/* checked 태그를 이용해 complete 투두는 미리 체크표시 되어있도록 구현합니다. */}
+      <input
+        type="checkbox"
+        checked={toDo.complete}
+        onChange={!toDo.complete ? markAsComplte : markAsIncomplte}
+      />
       <input
         type="text"
         ref={input}

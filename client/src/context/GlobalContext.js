@@ -59,11 +59,9 @@ export const GlobarProvider = (props) => {
     try {
       //로그인된 사용자가 있는지를 확인합니다.
       const res = await axios.get("/api/auth/current");
-      console.log(res);
       if (res.data) {
         //있다면 todos를 받아옵니다.
         const toDosRes = await axios.get("/api/todos/current");
-        console.log(toDosRes);
         if (toDosRes.data) {
           //받아온 사용자와 todos를 dispatch를 통해 데이터를 보내줍니다.
           dispatch({ type: "SET_USER", payload: res.data });
@@ -97,10 +95,26 @@ export const GlobarProvider = (props) => {
     }
   };
 
+  // 새로운 todo 추가
   const addToDo = (toDo) => {
     dispatch({
       type: "SET_INCOMPLETE_TODOS",
       payload: [toDo, ...state.incompleteToDos],
+    });
+  };
+
+  // todo complete, incomplete
+  const toDoComplete = (toDo) => {
+    dispatch({
+      type: "SET_INCOMPLETE_TODOS",
+      payload: state.incompleteToDos.filter(
+        (incompleteToDo) => incompleteToDo._id !== toDo._id
+      ),
+    });
+
+    dispatch({
+      type: "SET_COMPLETE_TODOS",
+      payload: [toDo, ...state.completeToDos],
     });
   };
 
@@ -111,6 +125,7 @@ export const GlobarProvider = (props) => {
     getCurrentUser,
     logout,
     addToDo,
+    toDoComplete,
   };
 
   return (

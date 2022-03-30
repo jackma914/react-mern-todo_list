@@ -16,7 +16,7 @@ router.get("/test", (req, res) => {
 // @access  Private
 router.post("/new", requiresAuth, async (req, res) => {
   try {
-    //todo 유효성 검사입니다.
+    // todo 유효성 검사입니다.
     const { isValid, errors } = validateToDoInput(req.body);
     if (!isValid) {
       return res.status(400).json(errors);
@@ -81,7 +81,7 @@ router.put("/:toDoId/complete", requiresAuth, async (req, res) => {
     const updatedToDo = await ToDo.findOneAndUpdate(
       {
         user: req.user._id,
-        id: req.params.toDoId,
+        _id: req.params.toDoId,
       },
       {
         complete: true,
@@ -93,6 +93,7 @@ router.put("/:toDoId/complete", requiresAuth, async (req, res) => {
       }
     );
 
+    console.log(updatedToDo);
     return res.json(updatedToDo);
   } catch (err) {
     console.log(err);
@@ -131,6 +132,7 @@ router.put("/:toDoId/incomplete", requiresAuth, async (req, res) => {
         new: true,
       }
     );
+    console.log(updatedToDo);
     return res.json(updatedToDo);
   } catch (err) {
     console.log(err);
