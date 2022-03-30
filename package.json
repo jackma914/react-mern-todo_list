@@ -10,7 +10,6 @@
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "install-client": "cd client && npm install",
     "build": "cd client && npm run build"
-
   },
   "repository": {
     "type": "git",
@@ -38,7 +37,3 @@
     "nodemon": "^2.0.15"
   }
 }
-
-
-    // "heroku-postbuild": "npm run install-client && npm run build",
-    // "start": "node server.js"
