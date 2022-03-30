@@ -14,10 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.send("서버 테스트입니다");
-});
-
 app.post("/name", (req, res) => {
   if (req.body.name) {
     return res.json({ name: req.body.name });
