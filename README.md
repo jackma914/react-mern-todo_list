@@ -41,10 +41,10 @@
 <br>
 <br>
 
-| [🔗 로그인 ](https://github.com/jackma914/js-run_record_app/wiki/%F0%9F%93%8C-%EC%A7%80%EB%8F%84-%ED%81%B4%EB%A6%AD) | [🔗 회원가입](https://github.com/jackma914/js-run_record_app/wiki/%F0%9F%93%8C-%EB%9F%B0%EB%8B%9D-%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B6%94%EA%B0%80) | [🔗 할일 CRUD](https://github.com/jackma914/js-run_record_app/wiki/%F0%9F%93%8C-%EB%A7%B5-%EC%9D%B4%EB%8F%99)
+| [🔗 로그인 ](https://github.com/jackma914/react-mern-todo_list/wiki/%F0%9F%93%8C-%EB%A1%9C%EA%B7%B8%EC%9D%B8,-%EC%9C%A0%ED%9A%A8%EC%84%B1---%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C) | [🔗 회원가입](https://github.com/jackma914/react-mern-todo_list/wiki/%F0%9F%93%8C-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85,-%EC%9C%A0%ED%9A%A8%EC%84%B1---%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C) | [🔗 할일 CRUD](https://github.com/jackma914/react-mern-todo_list/wiki/%F0%9F%93%8C-todo-%EC%B6%94%EA%B0%80,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C,%EC%99%84%EB%A3%8C----%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)
 |:--:|:--:|:--:|
 |<img width='1000' src='images/로그인gif.gif'>|<img width='1000' src='images/회원가입.gif'>|<img width='1000' src='images/crud.gif'>|
- |[🔗 완료/미완료 ](https://github.com/jackma914/js-run_record_app/wiki/%F0%9F%93%8C-%EC%A7%80%EB%8F%84-%ED%81%B4%EB%A6%AD) | [🔗 로그아웃](https://github.com/jackma914/js-run_record_app/wiki/%F0%9F%93%8C-%EB%9F%B0%EB%8B%9D-%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%B6%94%EA%B0%80)
+ |[🔗 완료/미완료 ](https://github.com/jackma914/react-mern-todo_list/wiki/%F0%9F%93%8C-todo-%EC%B6%94%EA%B0%80,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C,%EC%99%84%EB%A3%8C----%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C) | [🔗 로그아웃](https://github.com/jackma914/react-mern-todo_list/wiki/%F0%9F%93%8C-%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83---%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)
 |  <img width='1000' src='images/투두완료.gif'>|<img width='1000' src='images/로그아웃.gif'>| 
 
 ## 🛠 flowchart (흐름도)
